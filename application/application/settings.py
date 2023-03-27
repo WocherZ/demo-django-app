@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*'] # Для доступа всем
 
 
 # Application definition
@@ -39,7 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app'
+
+    # my modules
+    'crispy_forms',
+    'crispy_bootstrap5',
+
+    # my apps
+    'app',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -131,9 +138,14 @@ STATIC_ROOT = BASE_DIR / 'statics'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Стили Bootstrap для форм
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 # Кеширование
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',  # Фиктивное кеширование
     }
 }
+
+AUTH_USER_MODEL = 'users.Visitor'

@@ -1,0 +1,33 @@
+{% extends 'base_template.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% load static %}
+
+{% block files %}
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+<div>
+    <p>Hello, my friend!</p>
+</div>
+<div>
+    <div class="content-section">
+        <form method="POST">
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Добро пожаловать на сайт моего приложения</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Регистрация</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Уже есть аккаунт? <a class="ml-2" href="#">Вход</a>
+            </small>
+        </div>
+        </div>
+</div>
+{% endblock %}
