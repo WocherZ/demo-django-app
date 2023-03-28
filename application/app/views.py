@@ -10,3 +10,11 @@ class HomeView(View):
 class AboutView(View):
     def get(self, request):
         return render(request, 'app/about.html')
+
+
+class PersonalPage(View):
+    def get(self, request, id):
+        # TODO отображение индивидуальной инфы
+        return render(request, 'app/personal_page.html')
+
+
