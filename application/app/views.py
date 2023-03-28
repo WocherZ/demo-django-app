@@ -17,4 +17,10 @@ class PersonalPage(View):
         # TODO отображение индивидуальной инфы
         return render(request, 'app/personal_page.html')
 
+def logout(request):
+    del request.session['role']
+    del request.session['user_id']
+    request.session['is_login'] = False
+    return redirect('home')
+
 
