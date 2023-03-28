@@ -13,11 +13,11 @@
 
 {% load crispy_forms_tags %}
 {% block content %}
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand navbar-light bg-light">
-      <a class="navbar-brand" href="{% url 'home' %}">Главная</a>
-      </nav>
-    </div>
+<!--    <div class="container-fluid">-->
+<!--      <nav class="navbar navbar-expand navbar-light bg-light">-->
+<!--      <a class="navbar-brand" href="{% url 'home' %}">Главная</a>-->
+<!--      </nav>-->
+<!--    </div>-->
 
 <div class="container">
     <div class="row">
@@ -30,11 +30,6 @@
                     <button class="btn btn-primary" type="submit">Регистрация</button>
                 </div>
             </form>
-            <div class="border-top pt-3">
-                <small class="text-muted">
-                    Уже есть аккаунт? <a class="ml-2" href="{% url 'login' %}">Вход</a>
-                </small>
-            </div>
         </div>
     </div>
 </div>
