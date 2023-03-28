@@ -37,8 +37,8 @@ class VisitorManager(BaseUserManager):
         return self.get(login=login_)
 
 class Visitor(AbstractBaseUser, PermissionsMixin):
-    name = models.CharField(max_length=32, default='DEFAULT_NAME')
-    login = models.CharField(max_length=32, unique=True)
+    name = models.CharField(max_length=32, default='DEFAULT_NAME', verbose_name='Имя')
+    login = models.CharField(max_length=32, unique=True, verbose_name='Имя')
     group = models.CharField(max_length=32, choices=USER_GROUPS, verbose_name='Группа пользователя')
     is_staff = models.BooleanField(default=False)
 
