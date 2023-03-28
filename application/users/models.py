@@ -25,8 +25,8 @@ class VisitorManager():
 
 
 class Visitor(AbstractBaseUser):
-    name = models.CharField(max_length=32)
-    login = models.CharField(max_length=32, unique=True)
+    name = models.CharField(max_length=32, verbose_name='Имя')
+    login = models.CharField(max_length=32, unique=True, verbose_name='Логин')
     group = models.CharField(max_length=32, choices=USER_GROUPS, verbose_name='Группа пользователя')
 
     objects = VisitorManager()

@@ -32,7 +32,6 @@
     <div class="content-section">
         <form method="POST">
             <fieldset class="form-group">
-                <legend class="form-control">Регистрация</legend>
                 {{ form|crispy }}
             </fieldset>
             <div class="form-group">
@@ -44,6 +43,6 @@
                 Уже есть аккаунт? <a class="ml-2" href="{% url 'login' %}">Вход</a>
             </small>
         </div>
-        </div>
+    </div>
 </div>
 {% endblock %}

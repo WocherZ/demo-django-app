@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 {% endblock %}
+
+{% load crispy_forms_tags %}
 {% block content %}
     <div class="container-fluid">
       <nav class="navbar navbar-expand navbar-light bg-light">
@@ -17,23 +19,20 @@
       </nav>
     </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 offset-md-3 mt-5">
-          <h2 class="text-center mb-4">Авторизация</h2>
-          <form>
+    <div class="content-section">
+        <form method="POST">
+            <fieldset class="form-group">
+                {{ form|crispy }}
+            </fieldset>
             <div class="form-group">
-              <label for="login">Логин</label>
-              <input type="text" class="form-control" id="login" placeholder="Введите логин">
+                <button class="btn btn-primary" type="submit">Регистрация</button>
             </div>
-            <div class="form-group">
-              <label for="password">Пароль</label>
-              <input type="password" class="form-control" id="password" placeholder="Введите пароль">
-            </div>
-            <button type="submit" class="btn btn-primary">Подтвердить</button>
-          </form>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Уже есть аккаунт? <a class="ml-2" href="{% url 'login' %}">Вход</a>
+            </small>
         </div>
-      </div>
     </div>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

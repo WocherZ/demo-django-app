@@ -3,14 +3,15 @@ from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView
 
 
-from .forms import RegistrationForm
+from .forms import RegistrationForm, AuthorizationForm
 
-# class RegistrationView(CreateView):
-#     template_name = 'users/register.html'
-#     form_class = RegistrationForm
+class RegistrationView(CreateView):
+    template_name = 'users/register.html'
+    form_class = RegistrationForm
 
-def register(request):
-    return render(request, 'users/register.html')
+class AuthorizationView(CreateView):
+    template_name = 'users/login.html'
+    form_class = AuthorizationForm
 
 def login(request):
     return render(request, 'users/login.html')
