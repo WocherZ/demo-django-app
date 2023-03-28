@@ -47,15 +47,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ml-auto">
-                  {% if role == None %}
+                  {% if request.session.user_group == None %}
                     <li class="nav-item">
                       <a class="nav-link" href="{% url 'login' %}">Авторизация</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
                     </li>
-                  {% endif %}
-                  {% if role %}
+                  {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'personal_page' %}">Личный кабинет</a>
                     </li>

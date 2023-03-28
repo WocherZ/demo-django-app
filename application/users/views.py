@@ -8,6 +8,8 @@ from django.contrib.auth.views import LoginView
 from django.views import View
 
 from .forms import RegistrationForm, AuthorizationForm
+from .models import Visitor
+
 
 class RegistrationView(CreateView):
     template_name = 'users/register.html'
@@ -22,13 +24,26 @@ class RegistrationView(CreateView):
 
 class AuthorizationView(View):
     def get(self, request):
+        context = {}
+
+        print('Login: ' + str(request.session.get('login')))
         context = {'form': AuthorizationForm()}
         return render(request, 'users/login.html', context=context)
 
     def post(self, request):
-        print(request.POST)
-        # TODO - СВЕРКА ПОЛЬЗОВАТЕЛЯ
         context = {'form': AuthorizationForm()}
-        return redirect('home')
-        #return render(request, 'users/login.html', context=context)
+
+        login = request.POST['login']
+        password = request.POST['password']
+        if Visitor.objects.filter(login = login).first():
+            user = Visitor.objects.filter(login = login).first()
+            if password == user.password:
+                request.session['login'] = login
+                request.session['user_group'] = user.group
+                return redirect('home')
+            else:
+                context['error'] = 'Неверный логин или пароль!'
+
+
+        return render(request, 'users/login.html', context=context)
 
