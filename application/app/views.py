@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-from django.contrib.auth.models import AnonymousUser
 
 from .forms import ReleForm
 
 def add_role_context(request, context):
-    # if request.user is AnonymousUser:
-    #
-    #     return
-    if user_group is None:
+    try:
+        if str(request.user) != 'AnonymousUser':
+            user_group = None
+    finally:
+        user_group = None
+
+    if user_group:
         context['role'] = user_group
     else:
         context['role'] = None

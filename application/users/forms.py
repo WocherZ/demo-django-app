@@ -11,8 +11,7 @@ class RegistrationForm(forms.ModelForm):
         model = Visitor
         fields = ('login', 'password', 'name')
 
-class AuthorizationForm(forms.ModelForm):
+class AuthorizationForm(forms.Form):
+    login = forms.CharField(label='Логин', widget=forms.TextInput)
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
-    class Meta:
-        model = Visitor
-        fields = ('login', 'password')
+
