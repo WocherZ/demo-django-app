@@ -26,6 +26,10 @@ class AuthorizationView(LoginView):
 
     redirect_authenticated_user = True
 
+    def get(self, request, *args, **kwargs):
+        context = {'form': AuthorizationForm()}
+        return render(request, 'users/login.html', context=context)
+
     def get_success_url(self):
         print("Залогинился пользователь!")
 
