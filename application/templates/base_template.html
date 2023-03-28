@@ -6,12 +6,34 @@
     {% block files %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
+
 </head>
 
 <body>
-    <header>
+<!--    <header>-->
+<!--        <div class="header__logo">-->
+<!--            <a href="{% url 'home' %}"><img src="{% static 'img/axiom_logo.jpg' %}" height="150" alt="Axiom"></a>-->
+<!--        </div>-->
+<!--        <div class="headerr__optionsbar">-->
+<!--            {% if role == None %}-->
+<!--                <div class="headerr__button">-->
+<!--                    <a href="#">Войти</a>-->
+<!--                </div>-->
+<!--                <div class="headerr__button">-->
+<!--                    <a href="#">Регистрация</a>-->
+<!--                </div>-->
+<!--            {% endif %}-->
 
-    </header>
+<!--            {% if role %}-->
+<!--                <div class="headerr__button">-->
+<!--                    <a href="{% url 'profile' %}">Личный кабинет {{ role }}а</a>-->
+<!--                </div>-->
+<!--                <div class="headerr__button">-->
+<!--                    <a href="{% url 'logout' %}">Выйти</a>-->
+<!--                </div>-->
+<!--            {% endif %}-->
+<!--        </div>-->
+<!--    </header>-->
 
     <div>
         {% block content %}

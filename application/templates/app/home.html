@@ -14,7 +14,37 @@
 {% endblock %}
 
 {% block content %}
-<div>
-    <p>Hello, my friend!</p>
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="home.html">Главная</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Авторизация</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="row">
+    <div class="col-md-8">
+      <h1>Welcome to My Site</h1>
+      <p>This is a description of my site.</p>
+       <image src="{% static 'img/scheme.jpg' %}" width="450"/>
+    </div>
+    <div class="col-md-4">
+      <h2>Датчики</h2>
+      <ul>
+        <li>Датчик 1</li>
+        <li>Датчик 2</li>
+        <li>Датчик 3</li>
+      </ul>
+    </div>
+  </div>
 </div>
 {% endblock %}
