@@ -17,4 +17,4 @@ def login(request):
     return render(request, 'users/login.html')
 
 def home(request):
-    return render(request, 'app/home.html')
+    return render(request, 'app/home.html', {'role': 'Andrew'})

@@ -30,7 +30,7 @@
 
 <!--            {% if role %}-->
 <!--                <div class="headerr__button">-->
-<!--                    <a href="{% url 'profile' %}">Личный кабинет {{ role }}а</a>-->
+<!--                    <a href="{% url 'personal_page' %}">Личный кабинет {{ role }}а</a>-->
 <!--                </div>-->
 <!--                <div class="headerr__button">-->
 <!--                    <a href="{% url 'logout' %}">Выйти</a>-->
@@ -66,9 +66,10 @@
               </ul>
             </div>
           </nav>
-        {% block content %}
-        {% endblock %}
-    </div>
+        </div>
+    {% block content %}
+    {% endblock %}
+
 
     <footer>
 

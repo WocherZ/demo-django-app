@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
 
 
 class HomeView(View):
     def get(self, request):
-        return render(request, 'app/home.html')
+        return render(request, 'app/home.html', {'role': 'Andrew'})
 
 class AboutView(View):
     def get(self, request):
@@ -13,14 +13,14 @@ class AboutView(View):
 
 
 class PersonalPage(View):
-    def get(self, request, id):
+    def get(self, request):
         # TODO отображение индивидуальной инфы
         return render(request, 'app/personal_page.html')
 
 def logout(request):
-    del request.session['role']
-    del request.session['user_id']
-    request.session['is_login'] = False
+    # del request.session['role']
+    # del request.session['user_id']
+    # request.session['is_login'] = False
     return redirect('home')
 
 
