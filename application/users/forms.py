@@ -7,4 +7,6 @@ class RegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput)
     class Meta:
         model = Visitor
-        fields = ('login', 'password')
+        fields = ('login', 'password', 'name')
+
+# формы

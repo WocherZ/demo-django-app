@@ -1,0 +1,40 @@
+{% extends 'base_template.html' %}
+
+{% block title %}Войти{% endblock %}
+
+{% load static %}
+
+{% block files %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand navbar-light bg-light">
+      <a class="navbar-brand" href="{% url 'home' %}">Главная</a>
+      </nav>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3 mt-5">
+          <h2 class="text-center mb-4">Авторизация</h2>
+          <form>
+            <div class="form-group">
+              <label for="login">Логин</label>
+              <input type="text" class="form-control" id="login" placeholder="Введите логин">
+            </div>
+            <div class="form-group">
+              <label for="password">Пароль</label>
+              <input type="password" class="form-control" id="password" placeholder="Введите пароль">
+            </div>
+            <button type="submit" class="btn btn-primary">Подтвердить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}
