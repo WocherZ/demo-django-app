@@ -13,7 +13,6 @@ class VisitorManager(BaseUserManager):
         visitor = self.model(
             login=login,
             name=name,
-            password=password
         )
         visitor.set_password(password)
         visitor.group = 'VISITOR'
@@ -24,6 +23,7 @@ class VisitorManager(BaseUserManager):
 
 
     def create_superuser(self, login, password, name='default-admin-name'):
+        print("create_superuser")
         visitor = self.create_user(login, password, name)
         visitor.group = 'ADMIN'
         visitor.is_active = True
@@ -38,8 +38,8 @@ class VisitorManager(BaseUserManager):
 
 class Visitor(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=32, default='DEFAULT_NAME', verbose_name='Имя')
-    login = models.CharField(max_length=32, unique=True, verbose_name='Имя')
-    group = models.CharField(max_length=32, choices=USER_GROUPS, verbose_name='Группа пользователя')
+    login = models.CharField(max_length=32, unique=True, verbose_name=' Логин')
+    group = models.CharField(max_length=32, choices=USER_GROUPS, verbose_name='Группа пользователя', default='VISITOR')
     is_staff = models.BooleanField(default=False)
 
     objects = VisitorManager()

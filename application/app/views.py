@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-
+def add_role_context():
+    pass
 
 class HomeView(View):
     def get(self, request):
@@ -14,6 +15,8 @@ class AboutView(View):
 
 class PersonalPage(View):
     def get(self, request):
+        print(request.user)
+        print(request.user.group)
         # TODO отображение индивидуальной инфы
         return render(request, 'app/personal_page.html')
 
