@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.urls import reverse_lazy
@@ -23,12 +24,10 @@ class RegistrationView(CreateView):
 class AuthorizationView(LoginView):
     template_name = 'users/login.html'
     form_class = AuthorizationForm
-
     redirect_authenticated_user = True
-
-    def get(self, request, *args, **kwargs):
-        context = {'form': AuthorizationForm()}
-        return render(request, 'users/login.html', context=context)
+    # def get(self, request, *args, **kwargs):
+    #     context = {'form': AuthorizationForm()}
+    #     return render(request, 'users/login.html', context=context)
 
     def get_success_url(self):
         print("Залогинился пользователь!")

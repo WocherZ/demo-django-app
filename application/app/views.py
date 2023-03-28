@@ -1,17 +1,15 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
-def add_role_context(request, context):
-    try:
-        print(request.user)
-        if str(request.user) != 'AnonymousUser':
-            user_group = request.user.group
-        else:
-            user_group = None
-    finally:
-        user_group = None
+from django.contrib.auth.models import AnonymousUser
 
-    if user_group:
+from .forms import ReleForm
+
+def add_role_context(request, context):
+    # if request.user is AnonymousUser:
+    #
+    #     return
+    if user_group is None:
         context['role'] = user_group
     else:
         context['role'] = None
@@ -33,9 +31,10 @@ class AboutView(View):
 class PersonalPage(View):
     def get(self, request):
         context = {}
+        context['form'] = ReleForm()
         add_role_context(request, context)
-        print(request.user)
-        print(request.user.group)
+        #print(request.user)
+        #print(request.user.group)
         # TODO отображение индивидуальной инфы
         return render(request, 'app/personal_page.html', context)
 

@@ -16,6 +16,3 @@ class AuthorizationForm(forms.ModelForm):
     class Meta:
         model = Visitor
         fields = ('login', 'password')
-
-
-# формы

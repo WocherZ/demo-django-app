@@ -7,23 +7,30 @@
 {% block files %}
 {% endblock %}
 
+{% load crispy_forms_tags %}
 {% block content %}
-<form>
-  <p>Состояние реле</p>
-  <div>
-    <input type="radio" id="contactChoice1"
-     name="contact" value="email">
-    <label for="contactChoice1">Реле 1</label>
 
-    <input type="radio" id="contactChoice2"
-     name="contact" value="phone">
-    <label for="contactChoice2">Реле 2</label>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 mt-5">
+        <h2 class="text-center mb-4">Состояние реле</h2>
+      </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-5">
+            <form method="POST">
+                <fieldset class="form-group">
+                    {{ form|crispy }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">Применить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-    <input type="radio" id="contactChoice3"
-     name="contact" value="mail">
-    <label for="contactChoice3">Реле 3</label>
-  </div>
-  <div>
-    <button type="submit">Submit</button>
-  </div>
+
 {% endblock %}
