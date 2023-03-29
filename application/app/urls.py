@@ -8,4 +8,5 @@ urlpatterns = [
     path('about', views.AboutView.as_view(), name='about'),
     path('personal_page', views.PersonalPage.as_view(), name='personal_page'),
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('get_temperature/', views.getTemperature.as_view(), name='get_temperature'),
 ]
