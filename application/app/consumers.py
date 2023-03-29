@@ -1,4 +1,5 @@
 import json
+import time
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 class TemperaturesConsumer(AsyncJsonWebsocketConsumer):
@@ -7,17 +8,13 @@ class TemperaturesConsumer(AsyncJsonWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, code):
-        print("WS disconnect " + code)
+        print("WS disconnect " + str(code))
 
     async def receive(self, text_data):
-        print("WS receive: " + text_data)
-        print(type(text_data))
-
         await self.send_message("Bad ass")
-
 
     async def send_message(self, res):
         await self.send(text_data=json.dumps(
             {"status": "OK",
-             "text_data": res}
+             "text_data": str(round(time.time()) % 3600)}
         ))

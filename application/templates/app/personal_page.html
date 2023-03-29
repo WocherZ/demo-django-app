@@ -70,11 +70,11 @@
                 <div class="row our_cells">
                     <div class="our_main_divs">
                         <div style="font-size: 1rem">Текущая температура:
-                            <div id="uniqueID">{{ temperature }} <span class="highlighted_text">{{ current_rate }}</span></div>
+<!--                            <div id="uniqueID">{{ temperature }} <span class="highlighted_text">{{ current_rate }}</span></div>-->
                         </div>
                     </div>
                 </div>
-                <div class="row our_cells">
+<!--                <div class="row our_cells">-->
 <!--                    <div class="our_main_divs" style="display: block">-->
 <!--                        <div style="box-sizing: content-box">-->
 <!--                            <input type="number" placeholder=" Количество" class="text_field_buy_or_sell">-->
@@ -92,6 +92,24 @@
 <!--                            </button>-->
 <!--                        </div>-->
 <!--                    </div>-->
+<!--                </div>-->
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 1rem">Базовый тариф: 3.16 руб/кВтч
+                        </div>
+                    </div>
+                </div>
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 1rem">Стоимость энергии:
+                        </div>
+                    </div>
+                </div>
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 1rem">Статус по стоимости:
+                        </div>
+                    </div>
                 </div>
                 <div class="row our_cells">
                     <div class="our_main_divs">
@@ -110,5 +128,5 @@
 <p> I'm an admin</p>
 <!--30 пользователей-->
 
-
+{% endif %}
 {% endblock %}

@@ -24,8 +24,6 @@ class RegistrationView(CreateView):
 class AuthorizationView(View):
     def get(self, request):
         context = {}
-
-        print('Login: ' + str(request.session.get('login')))
         context = {'form': AuthorizationForm()}
         return render(request, 'users/login.html', context=context)
 

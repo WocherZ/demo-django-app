@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser, BaseUserManager
 from django.contrib.auth import get_user_model
+from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth import get_user_model
 
 USER_GROUPS = (
     ('ADMIN', 'admin'),
@@ -16,6 +18,11 @@ class VisitorManager(BaseUserManager):
         )
         visitor.set_password(password)
         print(visitor.password)
+        # encryptedpassword = make_password(password)
+        # print(encryptedpassword)
+        #
+        # checkpassword = check_password(password, encryptedpassword)
+        # print(checkpassword)
         visitor.group = 'VISITOR'
         visitor.is_staff = False
         visitor.is_superuser = False
