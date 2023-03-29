@@ -163,13 +163,13 @@ PASSWORD_HASHERS = [
 
 ASGI_APPLICATION = "application.asgi.application"
 
-CHANNEL_LAYERS = {
-    'default': {
-        ### Method 2: Via local Redis
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-             "hosts": [('127.0.0.1', 6379)],
-        },
-
-    },
-}
+# CHANNEL_LAYERS = {
+#     'default': {
+#         ### Method 2: Via local Redis
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#              "hosts": [('127.0.0.1', 6379)],
+#         },
+#
+#     },
+# }
