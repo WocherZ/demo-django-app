@@ -76,4 +76,7 @@ class ConsumerSourceView(View):
         context['users'] = Visitor.objects.all()
         return render(request, 'app/consumer_source.html', context)
 
+def power_supply_view(request):
+    return render(request, 'app/power_supply.html')
+
 
