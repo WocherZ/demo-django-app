@@ -20,20 +20,21 @@
     </div>
 </div>
 {% if request.session.user_group == 'OPERATOR' %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 offset-md-3 mt-5">
-                <form method="POST">
-                    <fieldset class="form-group">
-                        {{ form|crispy }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">Применить</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <a href="{% url 'operator_form' %}" class="btn btn-primary">Форма оператора </a>
     </div>
+    <div class="col">
+      <a href="{% url 'consumer_source' %}" class="btn btn-secondary">Источники потребителей</a>
+    </div>
+    <div class="col">
+      <a href="home.html" class="btn btn-success">Button 3</a>
+    </div>
+  </div>
+</div>
+
 {% elif request.session.user_group == 'VISITOR' %}
 <div class="container-fluid" style="margin-top: 20px; margin-bottom: 20px">
     <div class="container">
@@ -146,32 +147,30 @@
     </style>
   </head>
   <body>
-    <table class="table">
+  <table class="table">
       <thead>
-        <tr>
+      <tr>
           <th>Login</th>
           <th>Name</th>
           <th>Role</th>
-        </tr>
+      </tr>
 
-        {% for user in users %}
-        <tr>
-            <td><a href="{% url 'info_page' %}">{{ user.login }} </a></td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.group }}</td>
-        </tr>
-        {% endfor %}
+      {% for user in users %}
+      <tr>
+          <td><a href="{% url 'info_page' %}">{{ user.login }} </a></td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.group }}</td>
+      </tr>
+      {% endfor %}
       </thead>
       <tbody id="userTableBody">
       </tbody>
-    </table>
-    <style>
+  </table>
+  <style>
       .tb { border-collapse: collapse; width:300px; }
       .tb th, .tb td .tb a{ padding: 5px; border: solid 1px #777; }
       .tb th { background-color: lightblue; }
-    </style>
-    <script>
-    </script>
+  </style>
 
 {% endif %}
 {% endblock %}

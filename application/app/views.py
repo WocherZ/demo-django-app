@@ -6,8 +6,6 @@ from .forms import ReleForm
 from users.models import Visitor
 from .models import *
 
-
-
 class HomeView(View):
     def get(self, request):
         context = {}
@@ -23,7 +21,6 @@ class AboutView(View):
 class PersonalPage(View):
     def get(self, request):
         context = {}
-        context['form'] = ReleForm()
         # TODO отображение индивидуальной инфы
         if request.session['user_group'] == 'ADMIN':
             context['users'] = Visitor.objects.all()
@@ -66,5 +63,17 @@ class getTemperature(View):
             return HttpResponse("OK")
         else:
             return HttpResponse("404")
+
+class OperatorFormView(View):
+    def get(self, request):
+        context = {}
+        context['form'] = ReleForm()
+        return render(request, 'app/operator_form.html', context)
+
+class ConsumerSourceView(View):
+    def get(self, request):
+        context = {}
+        context['users'] = Visitor.objects.all()
+        return render(request, 'app/consumer_source.html', context)
 
 
