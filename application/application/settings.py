@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # my modules
+    'channels',
     'crispy_forms',
     'crispy_bootstrap5',
 
@@ -149,3 +150,26 @@ CACHES = {
 }
 
 AUTH_USER_MODEL = 'users.Visitor'
+
+LOGIN_URL = 'login'
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.ScryptPasswordHasher',
+]
+
+ASGI_APPLICATION = "application.asgi.application"
+
+CHANNEL_LAYERS = {
+    'default': {
+        ### Method 2: Via local Redis
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+             "hosts": [('127.0.0.1', 6379)],
+        },
+
+    },
+}

@@ -15,6 +15,7 @@ class VisitorManager(BaseUserManager):
             name=name,
         )
         visitor.set_password(password)
+        print(visitor.password)
         visitor.group = 'VISITOR'
         visitor.is_staff = False
         visitor.is_superuser = False
