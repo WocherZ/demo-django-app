@@ -26,6 +26,10 @@ class PersonalPage(View):
         # TODO отображение индивидуальной инфы
         return render(request, 'app/personal_page.html', context)
 
+    def post(self, request):
+        print(request.POST)
+        return HttpResponse("ok")
+
 def logout(request):
     request.session['login'] = None
     request.session['user_group'] = None
@@ -34,8 +38,6 @@ def logout(request):
 
 class getTemperature(View):
     def post(self, request):
-        TemperatureHistory.delete_all_records()
-        print("Пришла температура")
         print(request.POST['sensor_id'], type(request.POST['sensor_id']))
         print(request.POST['temperature'], type(request.POST['temperature']))
         print(request.POST['humanity'], type(request.POST['humanity']))

@@ -18,11 +18,7 @@ class VisitorManager(BaseUserManager):
         )
         visitor.set_password(password)
         print(visitor.password)
-        # encryptedpassword = make_password(password)
-        # print(encryptedpassword)
-        #
-        # checkpassword = check_password(password, encryptedpassword)
-        # print(checkpassword)
+
         visitor.group = 'VISITOR'
         visitor.is_staff = False
         visitor.is_superuser = False
