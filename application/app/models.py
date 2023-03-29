@@ -46,11 +46,20 @@ class RelayCondition(models.Model):
     relay_id = models.AutoField(primary_key=True)
     condition = models.BooleanField(default=False)
 
+
+
+
     def create_relays():
-        delete_all_relays()
+        RelayCondition.objects.all().delete()
         for i in range(MAX_NUMBER_RELAY):
             relay = RelayCondition(relay_id=i, condition=False)
             relay.save()
 
     def delete_all_relays():
         RelayCondition.objects.all().delete()
+
+    def write_values(values_dict):
+        for key in values_dict.keys():
+            relay = RelayCondition.objects.get(relay_id=int(key))
+            relay.condition = True
+            relay.save()

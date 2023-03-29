@@ -30,8 +30,19 @@ class PersonalPage(View):
         return render(request, 'app/personal_page.html', context)
 
     def post(self, request):
+        if (RelayCondition.objects.all() == None):
+            RelayCondition.create_relays()
+
+        values_checkbox = {}
         print(request.POST)
-        return HttpResponse("ok")
+        for i in range(1, MAX_NUMBER_RELAY+1):
+            if request.POST.get('checkbox' + str(i)) != None:
+                values_checkbox[i] = request.POST['checkbox' + str(i)]
+                print(request.POST['checkbox' + str(i)])
+        print(values_checkbox)
+        RelayCondition.write_values(values_checkbox)
+
+        return redirect('personal_page')
 
 def logout(request):
     request.session['login'] = None
