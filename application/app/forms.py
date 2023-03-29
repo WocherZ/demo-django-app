@@ -77,5 +77,3 @@ class ReleForm(forms.Form):
     textbox35 = forms.IntegerField(label='Число 35', initial=0, min_value=0, max_value=100)
     checkbox36 = forms.BooleanField(label='Реле 36', required=False)
     textbox36 = forms.IntegerField(label='Число 36', initial=0, min_value=0, max_value=100)
-
-# формы
