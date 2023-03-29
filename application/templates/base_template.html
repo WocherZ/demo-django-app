@@ -1,3 +1,8 @@
+<style>
+    #navigation,.navbar .navbar-default{
+  background-image: url("img/flower.jpg");
+}
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
     {% block files %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
