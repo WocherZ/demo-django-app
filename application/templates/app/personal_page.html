@@ -35,7 +35,6 @@
         </div>
     </div>
 {% elif request.session.user_group == 'VISITOR' %}
-<p> I'm a visitor </p>
 <div class="container-fluid" style="margin-top: 20px; margin-bottom: 20px">
     <div class="container">
         <div class="row">
@@ -124,8 +123,6 @@
 <script src="{% static 'js/temperatures.js' %}" defer></script>
 
 {% else %}
-<p> I'm an admin</p>
-
 <!DOCTYPE html>
 <html>
   <head>

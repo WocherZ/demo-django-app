@@ -12,27 +12,25 @@
 
 {% block content %}
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-md-8">
-      <p></p>
+  <div>
+    <div class="text-center">
       <h2>Добро пожаловать на наш сайт!</h2>
       <p></p>
-       <image src="{% static 'img/scheme.jpg' %}" width="450"/>
     </div>
-    <div class="col-md-4">
-      <p></p>
+    <div>
       <h2>Наша команда:</h2>
       <ul>
         <li>Зворыгин Владимир (капитан)</li>
-        <li>Ивашиненко Михаил</li>
-        <li>Двинских Павел</li>
-        <li>Миронов Андрей</li>
-        <li>Широкопетлев Никита</li>
-      </ul>
-      <ul>
-        <image src="{% static 'img/axiom_logo.jpg' %}" width="300"/>
+        <li>Ивашиненко Михаил (сбежал из подсобки)</li>
+        <li>Двинских Павел (тигр)</li>
+        <li>Миронов Андрей (гений, миллиардер, филантроп, плейбой)</li>
+        <li>Широкопетлев Никита (Герман)</li>
       </ul>
     </div>
+      <ul>
+        <image src="{% static 'img/axiom_logo.jpg' %}" width="300" class="rounded"/>
+        <image src="{% static 'img/NTO.png' %}" width="300" class="float-right"/>
+      </ul>
   </div>
 </div>
 {% endblock %}
