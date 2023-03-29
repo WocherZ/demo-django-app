@@ -15,27 +15,12 @@
 <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3 mt-5">
-        <h2 class="text-center mb-4">Личный кабинет</h2>
+        <h2 class="text-center mb-4">Подробная информация</h2>
       </div>
     </div>
 </div>
-{% if request.session.user_group == 'OPERATOR' %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 offset-md-3 mt-5">
-                <form method="POST">
-                    <fieldset class="form-group">
-                        {{ form|crispy }}
-                    </fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">Применить</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-{% elif request.session.user_group == 'VISITOR' %}
-<p> I'm a visitor </p>
+
+<p> He's a visitor </p>
 <div class="container-fluid" style="margin-top: 20px; margin-bottom: 20px">
     <div class="container">
         <div class="row">
@@ -122,59 +107,4 @@
     </div>
 </div>
 <script src="{% static 'js/temperatures.js' %}" defer></script>
-
-{% else %}
-<p> I'm an admin</p>
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>User Table</title>
-    <style>
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      th, td {
-        text-align: left;
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      a {
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Login</th>
-          <th>Name</th>
-          <th>Role</th>
-        </tr>
-
-        {% for user in users %}
-        <tr>
-            <td><a href="{% url 'info_page' %}">{{ user.login }} </a></td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.group }}</td>
-        </tr>
-        {% endfor %}
-      </thead>
-      <tbody id="userTableBody">
-      </tbody>
-    </table>
-    <style>
-      .tb { border-collapse: collapse; width:300px; }
-      .tb th, .tb td .tb a{ padding: 5px; border: solid 1px #777; }
-      .tb th { background-color: lightblue; }
-    </style>
-    <script>
-    </script>
-
-{% endif %}
 {% endblock %}

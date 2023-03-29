@@ -1,6 +1,5 @@
 <style>
     #navigation,.navbar .navbar-default{
-  background-image: url("img/flower.jpg");
 }
 </style>
 <!DOCTYPE html>
@@ -22,31 +21,6 @@
 </head>
 
 <body>
-<!--    <header>-->
-<!--        <div class="header__logo">-->
-<!--            <a href="{% url 'home' %}"><img src="{% static 'img/axiom_logo.jpg' %}" height="150" alt="Axiom"></a>-->
-<!--        </div>-->
-<!--        <div class="headerr__optionsbar">-->
-<!--            {% if role == None %}-->
-<!--                <div class="headerr__button">-->
-<!--                    <a href="#">Войти</a>-->
-<!--                </div>-->
-<!--                <div class="headerr__button">-->
-<!--                    <a href="#">Регистрация</a>-->
-<!--                </div>-->
-<!--            {% endif %}-->
-
-<!--            {% if role %}-->
-<!--                <div class="headerr__button">-->
-<!--                    <a href="{% url 'personal_page' %}">Личный кабинет {{ role }}а</a>-->
-<!--                </div>-->
-<!--                <div class="headerr__button">-->
-<!--                    <a href="{% url 'logout' %}">Выйти</a>-->
-<!--                </div>-->
-<!--            {% endif %}-->
-<!--        </div>-->
-<!--    </header>-->
-
     <div>
           <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="{% url 'home' %}">Главная</a>
@@ -79,7 +53,7 @@
 
 
     <footer>
-
+<p>&copy; Данный сайт был разработан в рамках НТО по профилю "Умный город"</p>
     </footer>
 </body>
 </html>

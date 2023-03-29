@@ -40,7 +40,4 @@ class AuthorizationView(View):
                 return redirect('home')
             else:
                 context['error'] = 'Неверный логин или пароль!'
-
-
         return render(request, 'users/login.html', context=context)
-
