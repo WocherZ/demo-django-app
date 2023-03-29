@@ -147,30 +147,32 @@
     </style>
   </head>
   <body>
-  <table class="table">
+    <table class="table">
       <thead>
-      <tr>
+        <tr>
           <th>Login</th>
           <th>Name</th>
           <th>Role</th>
-      </tr>
+        </tr>
 
-      {% for user in users %}
-      <tr>
-          <td><a href="{% url 'info_page' %}">{{ user.login }} </a></td>
-          <td>{{ user.name }}</td>
-          <td>{{ user.group }}</td>
-      </tr>
-      {% endfor %}
+        {% for user in users %}
+        <tr>
+            <td><a href="{% url 'info_page' user.id %}">{{ user.login }} </a></td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.group }}</td>
+        </tr>
+        {% endfor %}
       </thead>
       <tbody id="userTableBody">
       </tbody>
-  </table>
-  <style>
+    </table>
+    <style>
       .tb { border-collapse: collapse; width:300px; }
       .tb th, .tb td .tb a{ padding: 5px; border: solid 1px #777; }
       .tb th { background-color: lightblue; }
-  </style>
+    </style>
+    <script>
+    </script>
 
 {% endif %}
 {% endblock %}

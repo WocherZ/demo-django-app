@@ -46,9 +46,14 @@ def logout(request):
     request.session['user_group'] = None
     return redirect('home')
 
-
-def info_view(request):
-    return render(request, 'app/info_page.html')
+# Только для админов(просмотр пользователей)
+class InfoPage(View):
+    def get(self, request, id):
+        visitor = get_object_or_404(Visitor, pk=id)
+        print(visitor)
+        context = {'visitor': visitor,
+                   'current_price': visitor.tariff * visitor.consumed_energy}
+        return render(request, 'app/info_page.html', context=context)
 
 class getTemperature(View):
     def post(self, request):
