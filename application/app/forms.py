@@ -3,7 +3,6 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
-
 class ReleForm(forms.Form):
     checkbox1 = forms.BooleanField(label='Реле 1', required=False)
     textbox1 = forms.IntegerField(label='Число 1', initial=0, min_value=0, max_value=100)

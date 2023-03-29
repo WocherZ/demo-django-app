@@ -1,12 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponse
 
 from .forms import ReleForm
 from users.models import Visitor
 from .models import *
-
-
 
 class HomeView(View):
     def get(self, request):
@@ -23,7 +21,7 @@ class AboutView(View):
 class PersonalPage(View):
     def get(self, request):
         context = {}
-        context['form'] = ReleForm()
+        # TODO отображение индивидуальной инфы
         if request.session['user_group'] == 'ADMIN':
             context['users'] = Visitor.objects.all()
         return render(request, 'app/personal_page.html', context)
@@ -57,8 +55,6 @@ class InfoPage(View):
                    'current_price': visitor.tariff * visitor.consumed_energy}
         return render(request, 'app/info_page.html', context=context)
 
-
-
 class getTemperature(View):
     def post(self, request):
         print(request.POST['sensor_id'], type(request.POST['sensor_id']))
@@ -72,5 +68,17 @@ class getTemperature(View):
             return HttpResponse("OK")
         else:
             return HttpResponse("404")
+
+class OperatorFormView(View):
+    def get(self, request):
+        context = {}
+        context['form'] = ReleForm()
+        return render(request, 'app/operator_form.html', context)
+
+class ConsumerSourceView(View):
+    def get(self, request):
+        context = {}
+        context['users'] = Visitor.objects.all()
+        return render(request, 'app/consumer_source.html', context)
 
 

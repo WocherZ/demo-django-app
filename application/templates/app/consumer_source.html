@@ -1,0 +1,27 @@
+{% extends 'base_template.html' %}
+
+{% block title %}Источники питания потребителей{% endblock %}
+
+{% load static %}
+
+{% block files %}
+{% endblock %}
+
+{% block content %}
+<table class="table">
+      <thead>
+      <tr>
+          <th>Логин</th>
+          <th>Источники</th>
+      </tr>
+      {% for user in users %}
+      <tr>
+          <td>{{ user.login }}</td>
+          <td>{{'1, 2, 3, 4 источники'}}</td>
+      </tr>
+      {% endfor %}
+      </thead>
+      <tbody id="userTableBody">
+      </tbody>
+</table>
+{% endblock %}
