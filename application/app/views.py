@@ -3,6 +3,7 @@ from django.views import View
 from django.http import HttpResponse
 
 from .forms import ReleForm
+from users.models import Visitor
 
 
 
@@ -23,6 +24,8 @@ class PersonalPage(View):
         context = {}
         context['form'] = ReleForm()
         # TODO отображение индивидуальной инфы
+        if request.session['user_group'] == 'ADMIN':
+            context['users'] = Visitor.objects.all()
         return render(request, 'app/personal_page.html', context)
 
 def logout(request):
@@ -30,4 +33,7 @@ def logout(request):
     request.session['user_group'] = None
     return redirect('home')
 
+
+def info_view(request):
+    return render(request, 'app/info_page.html')
 
