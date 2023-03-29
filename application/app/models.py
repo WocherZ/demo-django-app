@@ -1,7 +1,8 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
-
 import datetime
+
+from users.models import Visitor
 
 MAX_NUMBER_TEMPERATURE = 14
 
@@ -10,6 +11,7 @@ MAX_NUMBER_RELAY = 36
 # Create your models here.
 class TemperatureSensor(models.Model):
     sensor_id = models.AutoField(primary_key=True)
+    visitor_id = models.ForeignKey(Visitor, on_delete=models.SET_NULL, null=True)
 
     def create_sensors():
         delete_all_objects()
@@ -19,6 +21,7 @@ class TemperatureSensor(models.Model):
 
     def delete_all_objects():
         TemperatureSensor.objects.all().delete()
+
 
 
 class TemperatureHistory(models.Model):
@@ -40,14 +43,9 @@ class TemperatureHistory(models.Model):
         TemperatureHistory.objects.all().delete()
 
 
-
-
 class RelayCondition(models.Model):
     relay_id = models.AutoField(primary_key=True)
     condition = models.BooleanField(default=False)
-
-
-
 
     def create_relays():
         RelayCondition.objects.all().delete()

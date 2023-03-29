@@ -156,7 +156,7 @@
 
         {% for user in users %}
         <tr>
-            <td><a href="{% url 'info_page' %}">{{ user.login }} </a></td>
+            <td><a href="{% url 'info_page' user.id %}">{{ user.login }} </a></td>
             <td>{{ user.name }}</td>
             <td>{{ user.group }}</td>
         </tr>

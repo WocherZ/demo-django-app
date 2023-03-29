@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser, BaseUserManager
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import get_user_model
@@ -8,6 +9,11 @@ USER_GROUPS = (
     ('ADMIN', 'admin'),
     ('OPERATOR', 'operator'),
     ('VISITOR', 'visitor')
+)
+
+STATUS_CHOICES = (
+    ('Оплачено', 'оплачено'),
+    ('Неоплачено', 'неоплачено'),
 )
 
 class VisitorManager(BaseUserManager):
@@ -45,6 +51,19 @@ class Visitor(AbstractBaseUser, PermissionsMixin):
     login = models.CharField(max_length=32, unique=True, verbose_name=' Логин')
     group = models.CharField(max_length=32, choices=USER_GROUPS, verbose_name='Группа пользователя', default='VISITOR')
     is_staff = models.BooleanField(default=False)
+    balance = models.FloatField(
+        validators=[MinValueValidator(0.0)],
+        default=0.0
+    )
+    tariff = models.FloatField(
+        validators=[MinValueValidator(0.0)],
+        default=3.16
+    )
+    status = models.CharField(max_length=32, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
+    consumed_energy = models.FloatField(
+        validators=[MinValueValidator(0.0)],
+        default=0
+    )
 
     objects = VisitorManager()
 

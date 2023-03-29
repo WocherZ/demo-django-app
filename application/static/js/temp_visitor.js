@@ -1,4 +1,7 @@
-let DATA_GRAPH = [20, 21, 22, 24, 27, 30]
+let DATA_GRAPH = [0, 0, 0, 0, 0, 0]
+
+const NUMBER_POINTS = 6
+
 
 let default_labels = ['0', '1', '2', '3', '4', '5'];
 let default_label = 'Температура';
@@ -53,7 +56,7 @@ function graphic() {
     myChart.update();
 }
 
-let connectionString = 'ws://' + window.location.host + '/ws/temperatures/'
+let connectionString = 'ws://' + window.location.host + '/ws/temp_visitor/'
 let socket = new WebSocket(connectionString)
 
 function send_request(socket, text_data) {
@@ -73,10 +76,15 @@ let data = 20;
 
 socket.onmessage = function(event) {
     let server_data = JSON.parse(event.data)
-    for (let i = 0; i < 6; i++) {
-        DATA_GRAPH[i] = DATA_GRAPH[i] + 1
+    let temperature = server_data.temperature
+    let current_temp = server_data.current_temp
+
+    console.log(server_data)
+    for (let i = 0; i < NUMBER_POINTS; i++) {
+        DATA_GRAPH[i] = temperature[i]
     }
-    data = 25
+
+    document.getElementById("temp_value").textContent=current_temp
 }
 
 socket.onerror = function(error) {

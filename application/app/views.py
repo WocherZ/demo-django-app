@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import HttpResponse
 
@@ -24,7 +24,6 @@ class PersonalPage(View):
     def get(self, request):
         context = {}
         context['form'] = ReleForm()
-        # TODO отображение индивидуальной инфы
         if request.session['user_group'] == 'ADMIN':
             context['users'] = Visitor.objects.all()
         return render(request, 'app/personal_page.html', context)
@@ -49,9 +48,16 @@ def logout(request):
     request.session['user_group'] = None
     return redirect('home')
 
+# Только для админов(просмотр пользователей)
+class InfoPage(View):
+    def get(self, request, id):
+        visitor = get_object_or_404(Visitor, pk=id)
+        print(visitor)
+        context = {'visitor': visitor,
+                   'current_price': visitor.tariff * visitor.consumed_energy}
+        return render(request, 'app/info_page.html', context=context)
 
-def info_view(request):
-    return render(request, 'app/info_page.html')
+
 
 class getTemperature(View):
     def post(self, request):
