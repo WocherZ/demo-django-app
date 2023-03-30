@@ -77,7 +77,6 @@ class OperatorFormView(View):
         reles = [0]*(max(values_checkbox.keys())+1)
         for box in values_checkbox.keys():
             reles[box] = 1 if values_checkbox[box] == 'on' else 0
-        print(reles)
         visualizer = visualizaton()
         if len(reles) > 30:
             visualizer.plot_single_bloc(*reles[:30])

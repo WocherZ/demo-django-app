@@ -160,8 +160,7 @@ class visualizaton:
                     d += elm.ElementDrawing(relay_close)
 
             d.save('static/img/scheme.svg')
-            print(r_up, r_down)
-            print('success')
+            print('Successfully saved image')
 
     def interact_plot(self):
         r1 = widgets.Checkbox(
