@@ -14,13 +14,10 @@ class TemperatureSensor(models.Model):
     visitor_id = models.ForeignKey(Visitor, on_delete=models.SET_NULL, null=True)
 
     def create_sensors():
-        delete_all_objects()
+        TemperatureSensor.objects.all().delete()
         for i in range(MAX_NUMBER_TEMPERATURE):
             temp = TemperatureSensor(sensor_id=i)
             temp.save()
-
-    def delete_all_objects():
-        TemperatureSensor.objects.all().delete()
 
     def get_sensor_by_visitor_id(visitor_id):
         return TemperatureSensor.objects.all().get(visitor_id=visitor_id)

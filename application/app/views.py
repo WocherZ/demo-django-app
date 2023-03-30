@@ -87,19 +87,18 @@ class OperatorFormView(View):
         time.sleep(1)
 
         # TODO - MQTT SEND
-        mqtt_sender = MqttWorker()
-        for i in range(MAX_NUMBER_RELAY):
-            relay = RelayCondition.objects.get(relay_id=i)
-            relay_state = 1 if relay.condition else 0
-            print(relay.relay_id, relay_state)
-            mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
-
-        mqtt_sender.disconnect()
+        # mqtt_sender = MqttWorker()
+        # for i in range(MAX_NUMBER_RELAY):
+        #     relay = RelayCondition.objects.get(relay_id=i)
+        #     relay_state = 1 if relay.condition else 0
+        #     print(relay.relay_id, relay_state)
+        #     mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
+        #
+        # mqtt_sender.disconnect()
 
         context = {}
-        context['form'] = ReleForm()
+        context['form'] = ReleForm(request.POST)
         return render(request, 'app/operator_form.html', context)
-
 
 class ConsumerSourceView(View):
     def get(self, request):

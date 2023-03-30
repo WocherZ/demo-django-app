@@ -1,6 +1,19 @@
 <style>
     #navigation,.navbar .navbar-default{
-}
+    }
+    html{
+        position: relative;
+        min-height: 100%;
+    }
+<!--    body {-->
+<!--        margin-bottom: 0 px;-->
+<!--    }-->
+    footer {
+        position: absolute;
+        bottom: 0;
+        height: 0 px;
+    }
+
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,8 +64,8 @@
     {% block content %}
     {% endblock %}
 
-    <footer class="text-center">
-<p>&copy; Данный сайт был разработан в рамках НТО по профилю "Умный город", 2023 год</p>
+    <footer>
+&copy; Данный сайт был разработан в рамках НТО по профилю "Умный город", 2023 год
     </footer>
 </body>
 </html>

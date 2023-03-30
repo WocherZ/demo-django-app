@@ -33,7 +33,6 @@
     </div>
   </div>
 </div>
-
 {% elif request.session.user_group == 'VISITOR' %}
 <div class="container">
     <div class="row">
@@ -55,13 +54,13 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-2">
-                                <a class="btn btn-primary">1 минута </a>
+                                <a class="btn btn-primary" id="button1">1 минута </a>
                             </div>
                             <div class="col-2">
-                                <a class="btn btn-primary">5 минут</a>
+                                <a class="btn btn-primary" id="button2">5 минут</a>
                             </div>
                             <div class="col-2">
-                                <a class="btn btn-primary">10 минут</a>
+                                <a class="btn btn-primary" id="button3">10 минут</a>
                             </div>
                         </div>
                     </div>
