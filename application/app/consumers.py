@@ -40,7 +40,7 @@ class TemperatureVisitorConsumer(AsyncJsonWebsocketConsumer):
         last_temperatures = await get_last_temperatures(visitor_id)
         await self.send(text_data=json.dumps(
             {"status": "OK",
-             "current_temp": last_temperatures[-1],
+             # "current_temp": last_temperatures[-1],
              "temperature": last_temperatures
              }
         ))

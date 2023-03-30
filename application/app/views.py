@@ -94,7 +94,7 @@ class OperatorFormView(View):
             visualizer.plot_single_bloc(*reles[:30])
         else:
             visualizer.plot_single_bloc(*reles)
-        time.sleep(1)
+        time.sleep(2)
 
         context = {}
         context['form'] = ReleForm(request.POST)
