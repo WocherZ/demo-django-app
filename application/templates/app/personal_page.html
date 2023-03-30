@@ -66,7 +66,14 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-4">
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 1rem">Имя пользователя: {{ visitor.name }} </div>
+                    </div>
+                </div>
+
                 <div class="row our_cells">
                     <div class="our_main_divs">
                         <div style="font-size: 1rem">Текущая температура:
@@ -74,47 +81,30 @@
                         </div>
                     </div>
                 </div>
-<!--                <div class="row our_cells">-->
-<!--                    <div class="our_main_divs" style="display: block">-->
-<!--                        <div style="box-sizing: content-box">-->
-<!--                            <input type="number" placeholder=" Количество" class="text_field_buy_or_sell">-->
-<!--                            <button type="submit" class="our_green_button"-->
-<!--                                    style="height: 2.5rem; width: 30%; margin-left: 5px; border-top-left-radius: 0; border-bottom-left-radius: 0">-->
-<!--                                Купить-->
-<!--                            </button>-->
-<!--                        </div>-->
 
-<!--                        <div style="margin-top: 5px; box-sizing: content-box">-->
-<!--                            <input type="number" placeholder=" Количество" class="text_field_buy_or_sell">-->
-<!--                            <button type="submit" class="our_green_button"-->
-<!--                                    style="height: 2.5rem; width: 30%; margin-left: 5px; border-top-left-radius: 0; border-bottom-left-radius: 0">-->
-<!--                                Продать-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <div class="row our_cells">
                     <div class="our_main_divs">
-                        <div style="font-size: 1rem">Базовый тариф: 3.16 руб/кВтч
+                        <div style="font-size: 1rem">Базовый тариф: {{ visitor.tariff }} руб/кВтч
                         </div>
                     </div>
                 </div>
                 <div class="row our_cells">
                     <div class="our_main_divs">
-                        <div style="font-size: 1rem">Стоимость энергии:
+                        <div style="font-size: 1rem">Стоимость энергии: {{ current_price }} руб.
                         </div>
                     </div>
                 </div>
                 <div class="row our_cells">
                     <div class="our_main_divs">
                         <div style="font-size: 1rem">Статус по стоимости:
+                            {{ visitor.status }}
                         </div>
                     </div>
                 </div>
                 <div class="row our_cells">
                     <div class="our_main_divs">
                         <div style="font-size: 1rem">Ваш баланс:
-                            <div><span class="highlighted_text">{{ user_balance }}</span> руб</div>
+                            <div><span class="highlighted_text">{{ visitor.balance }}</span> руб</div>
                         </div>
                     </div>
                 </div>

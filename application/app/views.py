@@ -24,7 +24,11 @@ class AboutView(View):
 class PersonalPage(View):
     def get(self, request):
         context = {}
-        # TODO отображение индивидуальной инфы
+        if request.session['user_group'] == 'VISITOR':
+            login = request.session['login']
+            visitor = Visitor.objects.all().get(login=login)
+            context['visitor'] = visitor
+            context['current_price'] = visitor.tariff * visitor.consumed_energy
         if request.session['user_group'] == 'ADMIN':
             context['users'] = Visitor.objects.all()
         return render(request, 'app/personal_page.html', context)
@@ -67,14 +71,20 @@ class OperatorFormView(View):
             RelayCondition.create_relays()
 
         values_checkbox = {}
-        print(request.POST)
         for i in range(1, MAX_NUMBER_RELAY+1):
             if request.POST.get('checkbox' + str(i)) != None:
                 values_checkbox[i-1] = request.POST['checkbox' + str(i)]
-                print(request.POST['checkbox' + str(i)])
-        print(values_checkbox)
 
         RelayCondition.write_values(values_checkbox)
+
+        # TODO - MQTT SEND
+        mqtt_sender = MqttWorker()
+        for i in range(MAX_NUMBER_RELAY):
+            relay = RelayCondition.objects.get(relay_id=i)
+            relay_state = 1 if relay.condition else 0
+            print(relay.relay_id, relay_state)
+            mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
+        mqtt_sender.disconnect()
 
         reles = [0]*(max(values_checkbox.keys() if values_checkbox.keys() else [0])+1)
         for box in values_checkbox.keys():
@@ -85,16 +95,6 @@ class OperatorFormView(View):
         else:
             visualizer.plot_single_bloc(*reles)
         time.sleep(1)
-
-        # TODO - MQTT SEND
-        # mqtt_sender = MqttWorker()
-        # for i in range(MAX_NUMBER_RELAY):
-        #     relay = RelayCondition.objects.get(relay_id=i)
-        #     relay_state = 1 if relay.condition else 0
-        #     print(relay.relay_id, relay_state)
-        #     mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
-        #
-        # mqtt_sender.disconnect()
 
         context = {}
         context['form'] = ReleForm(request.POST)

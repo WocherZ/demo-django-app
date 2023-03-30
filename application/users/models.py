@@ -13,6 +13,7 @@ USER_GROUPS = (
 
 STATUS_CHOICES = (
     ('Оплачено', 'оплачено'),
+    ('На оплате', 'на оплате'),
     ('Неоплачено', 'неоплачено'),
 )
 
@@ -59,7 +60,7 @@ class Visitor(AbstractBaseUser, PermissionsMixin):
         validators=[MinValueValidator(0.0)],
         default=3.16
     )
-    status = models.CharField(max_length=32, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0])
+    status = models.CharField(max_length=32, choices=STATUS_CHOICES, default='Неоплачено')
     consumed_energy = models.FloatField(
         validators=[MinValueValidator(0.0)],
         default=0
