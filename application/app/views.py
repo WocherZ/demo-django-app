@@ -5,6 +5,8 @@ from django.http import HttpResponse
 from .forms import ReleForm
 from users.models import Visitor
 from .models import *
+from .schemas_draw import visualizaton
+import time
 
 class HomeView(View):
     def get(self, request):
@@ -25,21 +27,6 @@ class PersonalPage(View):
         if request.session['user_group'] == 'ADMIN':
             context['users'] = Visitor.objects.all()
         return render(request, 'app/personal_page.html', context)
-
-    def post(self, request):
-        if (RelayCondition.objects.all() == None):
-            RelayCondition.create_relays()
-
-        values_checkbox = {}
-        print(request.POST)
-        for i in range(1, MAX_NUMBER_RELAY+1):
-            if request.POST.get('checkbox' + str(i)) != None:
-                values_checkbox[i] = request.POST['checkbox' + str(i)]
-                print(request.POST['checkbox' + str(i)])
-        print(values_checkbox)
-        RelayCondition.write_values(values_checkbox)
-
-        return redirect('personal_page')
 
 def logout(request):
     request.session['login'] = None
@@ -74,6 +61,30 @@ class OperatorFormView(View):
         context = {}
         context['form'] = ReleForm()
         return render(request, 'app/operator_form.html', context)
+
+    def post(self, request):
+        if (RelayCondition.objects.all() == None):
+            RelayCondition.create_relays()
+
+        values_checkbox = {}
+        print(request.POST)
+        for i in range(1, MAX_NUMBER_RELAY+1):
+            if request.POST.get('checkbox' + str(i)) != None:
+                values_checkbox[i-1] = request.POST['checkbox' + str(i)]
+                print(request.POST['checkbox' + str(i)])
+        # print(values_checkbox)
+        RelayCondition.write_values(values_checkbox)
+        reles = [0]*(max(values_checkbox.keys())+1)
+        for box in values_checkbox.keys():
+            reles[box] = 1 if values_checkbox[box] == 'on' else 0
+        print(reles)
+        visualizer = visualizaton()
+        if len(reles) > 30:
+            visualizer.plot_single_bloc(*reles[:30])
+        else:
+            visualizer.plot_single_bloc(*reles)
+        time.sleep(1)
+        return redirect('operator_form')
 
 class ConsumerSourceView(View):
     def get(self, request):
