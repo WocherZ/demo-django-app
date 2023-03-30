@@ -1,5 +1,5 @@
 let DATA_GRAPH = [20, 21, 22, 24, 27, 30]
-let period = 0;
+let period = 1;
 
 // period - время в минутах, за которое пользователь хочет вывести свои данные
 let default_labels = ['0', '1', '2', '3', '4', '5'];
@@ -55,7 +55,7 @@ function graphic() {
     myChart.update();
 }
 
-let connectionString = 'ws://' + window.location.host + '/ws/temperatures/'
+let connectionString = 'ws://' + window.location.host + '/ws/sensor_temp/'
 let socket = new WebSocket(connectionString)
 
 function send_request(socket, text_data) {
@@ -86,15 +86,11 @@ socket.onclose = function(event) {
     console.log('WS close')
 }
 
-let timeseries = 0;
-let data = 20;
-
 socket.onmessage = function(event) {
     let server_data = JSON.parse(event.data)
     for (let i = 0; i < 6; i++) {
         DATA_GRAPH[i] = DATA_GRAPH[i] + 1
     }
-    data = 25
 }
 
 socket.onerror = function(error) {
