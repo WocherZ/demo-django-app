@@ -100,7 +100,6 @@ socket.onmessage = function(event) {
     let current_temp = server_data.current_temp
     let timeseries = server_data.timeseries
 
-    console.log(timeseries)
     for (let i = 0; i < NUMBER_POINTS; i++) {
 
         DATA_GRAPH[i] = temperature[i]
