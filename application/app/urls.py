@@ -12,5 +12,6 @@ urlpatterns = [
     path('get_temperature/', views.getTemperature.as_view(), name='get_temperature'),
     path('operator_form', views.OperatorFormView.as_view(), name='operator_form'),
     path('consumer_source', views.ConsumerSourceView.as_view(), name='consumer_source'),
+    path('power_supply', views.power_supply_view, name='power_supply'),
 
 ]

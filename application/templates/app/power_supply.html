@@ -1,0 +1,28 @@
+{% extends 'base_template.html' %}
+
+{% block title %}Источники питания{% endblock %}
+
+{% load static %}
+
+{% block files %}
+{% endblock %}
+
+{% block content %}
+<table class="table">
+      <thead>
+      <tr>
+          <th>Источник питания</th>
+          <th>Суммарная нагрузка</th>
+          <th>КПД</th>
+      </tr>
+      <tr>
+          <td>Блок питания №{{'1'}}</td>
+          <td>{{'какая-то нагрузка'}}</td>
+          <td>{{'какой-то КПД'}}</td>
+      </tr>
+
+      </thead>
+      <tbody id="userTableBody">
+      </tbody>
+</table>
+{% endblock %}
