@@ -3,6 +3,7 @@ let DATA_GRAPH = [0, 0, 0, 0, 0, 0]
 const NUMBER_POINTS = 6
 
 
+
 let default_labels = ['0', '1', '2', '3', '4', '5'];
 let default_label = 'Температура';
 let ctx = document.getElementById('myChart');
@@ -56,7 +57,14 @@ function graphic() {
     myChart.update();
 }
 
-let connectionString = 'ws://' + window.location.host + '/ws/temp_visitor/'
+const QueryString = window.location.pathname
+console.log(QueryString)
+console.log(typeof QueryString)
+let q = QueryString.split("/")
+console.log(q)
+let id = q[q.length - 1]
+console.log(id)
+let connectionString = 'ws://' + window.location.host + '/ws/temp_visitor/' + id + '/'
 let socket = new WebSocket(connectionString)
 
 function send_request(socket, text_data) {
