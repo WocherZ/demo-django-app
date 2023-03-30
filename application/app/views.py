@@ -6,6 +6,7 @@ from .forms import ReleForm
 from users.models import Visitor
 from .models import *
 from .schemas_draw import visualizaton
+from .mqtt_sender import MqttWorker
 import time
 
 class HomeView(View):
@@ -73,7 +74,7 @@ class OperatorFormView(View):
                 print(request.POST['checkbox' + str(i)])
         # print(values_checkbox)
         RelayCondition.write_values(values_checkbox)
-        reles = [0]*(max(values_checkbox.keys())+1)
+        reles = [0]*(max(values_checkbox.keys() if values_checkbox.keys() else [0])+1)
         for box in values_checkbox.keys():
             reles[box] = 1 if values_checkbox[box] == 'on' else 0
         visualizer = visualizaton()
@@ -82,7 +83,18 @@ class OperatorFormView(View):
         else:
             visualizer.plot_single_bloc(*reles)
         time.sleep(1)
-        return redirect('operator_form')
+
+        # TODO - MQTT SEND
+        mqtt_sender = MqttWorker()
+        for i in range(MAX_NUMBER_RELAY):
+            relay = RelayCondition.objects.get(relay_id=i)
+            relay_state = 1 if relay.condition else 0
+            print(relay.relay_id, relay_state)
+            mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
+
+        mqtt_sender.disconnect()
+
+        return self.get(request)
 
 class ConsumerSourceView(View):
     def get(self, request):

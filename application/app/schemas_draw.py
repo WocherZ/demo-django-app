@@ -1,13 +1,6 @@
-import ipywidgets as widgets  # pip install ipywidgets jupyter nbextension enable widgetsnbextension
-# from IPython.display import display
-# from IPython.display import HTML
-# from IPython.display import SVG
-# from ipywidgets import interact
+import ipywidgets as widgets
 
-# import nbinteract as nbi
-# import matplotlib.pyplot as plt # !/usr/bin/python3 -m pip install matplotlib
-
-import schemdraw  # !/usr/local/bin/python3 -m pip install SchemDraw
+import schemdraw
 import schemdraw.elements as elm
 import matplotlib
 matplotlib.use('Agg')
