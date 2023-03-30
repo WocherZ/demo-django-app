@@ -97,6 +97,10 @@ class OperatorFormView(View):
 
         # MQTT отправка состояний реле
         mqtt_sender = MqttWorker()
+        context = {}
+        context['form'] = ReleForm(request.POST)
+
+        # mqtt_sender = MqttWorker()
         for i in range(MAX_NUMBER_RELAY):
             relay = RelayCondition.objects.get(relay_id=i)
             relay_state = 1 if relay.condition else 0
@@ -115,8 +119,6 @@ class OperatorFormView(View):
             visualizer.plot_single_bloc(*reles)
         time.sleep(2)
 
-        context = {}
-        context['form'] = ReleForm(request.POST)
         return render(request, 'app/operator_form.html', context)
 
 

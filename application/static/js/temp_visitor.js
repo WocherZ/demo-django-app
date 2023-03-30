@@ -1,8 +1,23 @@
 let DATA_GRAPH = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+let period = 0;
 
 const NUMBER_POINTS = 12
 
+var button1 = document.getElementById('button1');
+var button2 = document.getElementById('button2');
+var button3 = document.getElementById('button3');
 
+button1.onclick = function(){
+    period = 1;
+}
+
+button2.onclick = function(){
+    period = 5;
+}
+
+button3.onclick = function(){
+    period = 10;
+}
 
 let default_labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
 let default_label = 'Температура';
