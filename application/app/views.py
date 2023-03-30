@@ -72,8 +72,10 @@ class OperatorFormView(View):
             if request.POST.get('checkbox' + str(i)) != None:
                 values_checkbox[i-1] = request.POST['checkbox' + str(i)]
                 print(request.POST['checkbox' + str(i)])
-        # print(values_checkbox)
+        print(values_checkbox)
+
         RelayCondition.write_values(values_checkbox)
+
         reles = [0]*(max(values_checkbox.keys() if values_checkbox.keys() else [0])+1)
         for box in values_checkbox.keys():
             reles[box] = 1 if values_checkbox[box] == 'on' else 0
@@ -94,7 +96,10 @@ class OperatorFormView(View):
 
         mqtt_sender.disconnect()
 
-        return self.get(request)
+        context = {}
+        context['form'] = ReleForm()
+        return render(request, 'app/operator_form.html', context)
+
 
 class ConsumerSourceView(View):
     def get(self, request):

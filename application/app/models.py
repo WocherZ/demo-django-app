@@ -64,7 +64,15 @@ class RelayCondition(models.Model):
         RelayCondition.objects.all().delete()
 
     def write_values(values_dict):
-        for key in values_dict.keys():
-            relay = RelayCondition.objects.get(relay_id=int(key))
-            relay.condition = True
+        for i in range(MAX_NUMBER_RELAY):
+            relay = RelayCondition.objects.get(relay_id=i)
+            if i in values_dict.keys():
+                relay.condition = True
+            else:
+                relay.condition = False
             relay.save()
+
+        # for key in values_dict.keys():
+        #     relay = RelayCondition.objects.get(relay_id=int(key))
+        #     relay.condition = True
+        #     relay.save()
