@@ -39,18 +39,17 @@ class InfoPage(View):
         visitor = get_object_or_404(Visitor, pk=id)
         print(visitor)
         context = {'visitor': visitor,
-                   'current_price': visitor.tariff * visitor.consumed_energy}
+                   'current_price': visitor.tariff * visitor.consumed_energy,
+                   'sensor_id': TemperatureSensor.get_sensor_by_visitor_id(id).sensor_id}
         return render(request, 'app/info_page.html', context=context)
 
 class getTemperature(View):
     def post(self, request):
-        print(request.POST['sensor_id'], type(request.POST['sensor_id']))
-        print(request.POST['temperature'], type(request.POST['temperature']))
-        print(request.POST['humanity'], type(request.POST['humanity']))
         sensor_id = int(request.POST['sensor_id'])
         temperature = float(request.POST['temperature'])
         humanity = float(request.POST['humanity'])
         if sensor_id < 16:
+            print("Данные с датчиков:", sensor_id, temperature, humanity)
             TemperatureHistory.create_record(sensor_id, temperature, humanity)
             return HttpResponse("OK")
         else:
