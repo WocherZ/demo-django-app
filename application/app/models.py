@@ -40,7 +40,6 @@ class TemperatureHistory(models.Model):
     def delete_all_records():
         TemperatureHistory.objects.all().delete()
 
-
     def get_last_n_history_records(sensor_id, n):
         return reversed(TemperatureHistory.objects.all().filter(sensor=sensor_id).order_by('-id')[:n])
 

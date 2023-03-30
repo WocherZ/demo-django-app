@@ -10,6 +10,8 @@ from .mqtt_sender import MqttWorker
 import time
 import math
 
+CRITICAL_RELAYS = [4]
+
 # Главная страница
 class HomeView(View):
     def get(self, request):
@@ -84,18 +86,18 @@ class getTemperature(View):
         if (sensor_id < 16) and (not math.isnan(temperature)) and (not math.isnan(humanity)):
 
 
-            if sensor_id == 1:
+            if sensor_id in CRITICAL_RELAYS:
                 if temperature >= 27.0:
                     mqtt_sender = MqttWorker()
-                    mqtt_sender.send_state_2bytes(12, 0)
+                    mqtt_sender.send_state_2bytes(4, 0)
                     mqtt_sender.disconnect()
-                    print("Послан сигнал на выключение реле:", 12)
+                    print("Послан сигнал на выключение реле:", 4)
                     FLAG = True
                 else:
                     mqtt_sender = MqttWorker()
-                    mqtt_sender.send_state_2bytes(12, 1)
+                    mqtt_sender.send_state_2bytes(4, 1)
                     mqtt_sender.disconnect()
-                    print("Послан сигнал на включение реле:", 12)
+                    print("Послан сигнал на включение реле:", 4)
                     FLAG = False
 
 
