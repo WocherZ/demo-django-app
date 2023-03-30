@@ -8,6 +8,7 @@ from .models import *
 from .schemas_draw import visualizaton
 from .mqtt_sender import MqttWorker
 import time
+import math
 
 # Главная страница
 class HomeView(View):
@@ -56,7 +57,8 @@ class InfoPage(View):
         print(visitor)
         context = {'visitor': visitor,
                    'current_price': visitor.tariff * visitor.consumed_energy,
-                   'sensor_id': TemperatureSensor.get_sensor_by_visitor_id(id).sensor_id}
+                   'sensor_id': visitor.sensor_id.sensor_id,
+                   }
         return render(request, 'app/info_page.html', context=context)
 
 
@@ -66,7 +68,8 @@ class getTemperature(View):
         sensor_id = int(request.POST['sensor_id'])
         temperature = float(request.POST['temperature'])
         humanity = float(request.POST['humanity'])
-        if sensor_id < 16:
+        print(humanity)
+        if sensor_id < 16 and not math.isnan(temperature) and not math.isnan(humanity):
             print("Данные с датчиков:", sensor_id, temperature, humanity)
             TemperatureHistory.create_record(sensor_id, temperature, humanity)
             return HttpResponse("OK")

@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth import get_user_model
 
+from app.models import TemperatureSensor
+
 USER_GROUPS = (
     ('ADMIN', 'admin'),
     ('OPERATOR', 'operator'),
@@ -65,6 +67,7 @@ class Visitor(AbstractBaseUser, PermissionsMixin):
         validators=[MinValueValidator(0.0)],
         default=0
     )
+    sensor_id = models.ForeignKey(TemperatureSensor, on_delete=models.SET_DEFAULT, default=0)
 
     objects = VisitorManager()
 
@@ -75,3 +78,6 @@ class Visitor(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Список пользователей'
         permissions = []
+
+    def get_sensor(self):
+        return TemperatureSensor.objects.get(sensor_id=self.sensor_id.sensor_id).sensor_id
