@@ -157,11 +157,22 @@ class OperatorFormView(View):
 class ConsumerSourceView(View):
     def get(self, request):
         context = {}
-        context['users'] = Visitor.objects.all()
-        return render(request, 'app/consumer_source.html', context)
+        context['user_id'] = []
+        context['sourse_id'] = []
+        i = 0
+        for user in Visitor.objects.all():
+            context['sourse_id'].append((user.id // 8 + 1, user.id))
+            context['user_id'].append(user.id)
+        context['everything'] = context['user_id'] + context['sourse_id']
+        return render(request, 'app/consumer_source.html', context=context)
 
 
 def power_supply_view(request):
-    return render(request, 'app/power_supply.html')
+    context = {}
+    N = RelayCondition.objects.all().filter(condition=True).all().count()
+    first = int(RelayCondition.objects.all().get(relay_id = 1).condition)
+    context['power'] = round((N-first)*0.8, 1)
+    context['KPD'] = round(100 * 0.5 / (0.5 + 0.12))
+    return render(request, 'app/power_supply.html', context)
 
 

@@ -12,13 +12,16 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6 offset-md-3 mt-5">
-            <form method="POST">
-                <fieldset class="form-group">
-                    {{ form|crispy }}
-                </fieldset>
-                <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Применить</button>
+            <form class='form' method="POST">
+                <div class='row'>
+                    {% for field in form %}
+                        <div class='col-md-3'>
+                          {{ field|as_crispy_field }}
+                        </div>
+                    {% endfor %}
+                    {% csrf_token %}
                 </div>
+                <input class='btn btn-primary' type='submit'>
             </form>
         </div>
     </div>
