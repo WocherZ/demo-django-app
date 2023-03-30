@@ -93,7 +93,7 @@ class OperatorFormView(View):
         RelayCondition.write_values(values_checkbox)
 
         # MQTT отправка состояний реле
-        mqtt_sender = MqttWorker()
+        # mqtt_sender = MqttWorker()
         context = {}
         context['form'] = ReleForm(request.POST)
 
@@ -102,8 +102,8 @@ class OperatorFormView(View):
             relay = RelayCondition.objects.get(relay_id=i)
             relay_state = 1 if relay.condition else 0
             print(relay.relay_id, relay_state)
-            mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
-        mqtt_sender.disconnect()
+        #     mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
+        # mqtt_sender.disconnect()
 
         # Сохранение картинки svg - схемы
         reles = [0]*(max(values_checkbox.keys() if values_checkbox.keys() else [0])+1)
