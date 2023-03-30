@@ -2,8 +2,6 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 import datetime
 
-#from users.models import Visitor
-
 MAX_NUMBER_TEMPERATURE = 14
 
 MAX_NUMBER_RELAY = 36
@@ -12,6 +10,8 @@ MAX_NUMBER_RELAY = 36
 class TemperatureSensor(models.Model):
     sensor_id = models.AutoField(primary_key=True)
 
+    def __str__(self):
+        return "Датчик температуры " + str(self.sensor_id)
 
     def create_sensors():
         TemperatureSensor.objects.all().delete()

@@ -1,14 +1,32 @@
-let DATA_GRAPH = [20, 21, 22, 24, 27, 30]
-let period = 1;
+let DATA_GRAPH = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+let LABELS_GRAPH = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
+let period = 0;
 
-// period - время в минутах, за которое пользователь хочет вывести свои данные
-let default_labels = ['0', '1', '2', '3', '4', '5'];
+const NUMBER_POINTS = 12
+
+var button1 = document.getElementById('button1');
+var button2 = document.getElementById('button2');
+var button3 = document.getElementById('button3');
+
+button1.onclick = function(){
+    period = 1;
+}
+
+button2.onclick = function(){
+    period = 5;
+}
+
+button3.onclick = function(){
+    period = 10;
+}
+
+let default_labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
 let default_label = 'Температура';
 let ctx = document.getElementById('myChart');
 window.graphData = {
     type: 'line',
     data: {
-        labels: default_labels,
+        labels: LABELS_GRAPH,
         datasets: [{
             label: default_label,
             data: DATA_GRAPH,
@@ -52,30 +70,19 @@ let myChart = new Chart(ctx, graphData);
 
 function graphic() {
     graphData.data.datasets[0].data = DATA_GRAPH;
+    graphData.data.lables = LABELS_GRAPH;
     myChart.update();
 }
 
-let connectionString = 'ws://' + window.location.host + '/ws/sensor_temp/'
+const QueryString = window.location.pathname
+let q = QueryString.split("/")
+let id = q[q.length - 1]
+
+let connectionString = 'ws://' + window.location.host + '/ws/temp_visitor/' + id + '/'
 let socket = new WebSocket(connectionString)
 
 function send_request(socket, text_data) {
     socket.send(text_data)
-}
-
-var button1 = document.getElementById('button1');
-var button2 = document.getElementById('button2');
-var button3 = document.getElementById('button3');
-
-button1.onclick = function(){
-    period = 1;
-}
-
-button2.onclick = function(){
-    period = 5;
-}
-
-button3.onclick = function(){
-    period = 10;
 }
 
 socket.onopen = function() {
@@ -86,11 +93,21 @@ socket.onclose = function(event) {
     console.log('WS close')
 }
 
+
 socket.onmessage = function(event) {
     let server_data = JSON.parse(event.data)
-    for (let i = 0; i < 6; i++) {
-        DATA_GRAPH[i] = DATA_GRAPH[i] + 1
+    let temperature = server_data.temperature
+    let current_temp = server_data.current_temp
+    let timeseries = server_data.timeseries
+
+    console.log(timeseries)
+    for (let i = 0; i < NUMBER_POINTS; i++) {
+
+        DATA_GRAPH[i] = temperature[i]
+        LABELS_GRAPH[i] = timeseries[i]
     }
+
+    document.getElementById("temp_value").textContent=current_temp
 }
 
 socket.onerror = function(error) {
@@ -102,4 +119,4 @@ function global() {
     graphic()
 }
 
-setInterval(global, 1000)
+setInterval(global, 2000)

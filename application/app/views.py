@@ -61,14 +61,44 @@ class InfoPage(View):
                    }
         return render(request, 'app/info_page.html', context=context)
 
+def off_relay_if_limit_temp(sensor_id, current_temp, limit_value, relay_id):
+    if sensor_id == 1:
+        if current_temp >= limit_value:
+            mqtt_sender = MqttWorker()
+            mqtt_sender.send_state_2bytes(relay_id, 0)
+            mqtt_sender.disconnect()
+            print("Послан сигнал на выключение реле:", relay_id)
+            return True
+    return False
+
+FLAG = True
 
 # Принятие данных с датчиков из gateway
 class getTemperature(View):
+    # FLAG = False
     def post(self, request):
+        global FLAG
         sensor_id = int(request.POST['sensor_id'])
         temperature = float(request.POST['temperature'])
         humanity = float(request.POST['humanity'])
-        if sensor_id < 16 and not math.isnan(temperature) and not math.isnan(humanity):
+        if (sensor_id < 16) and (not math.isnan(temperature)) and (not math.isnan(humanity)):
+
+
+            if sensor_id == 1:
+                if temperature >= 27.0:
+                    mqtt_sender = MqttWorker()
+                    mqtt_sender.send_state_2bytes(12, 0)
+                    mqtt_sender.disconnect()
+                    print("Послан сигнал на выключение реле:", 12)
+                    FLAG = True
+                else:
+                    mqtt_sender = MqttWorker()
+                    mqtt_sender.send_state_2bytes(12, 1)
+                    mqtt_sender.disconnect()
+                    print("Послан сигнал на включение реле:", 12)
+                    FLAG = False
+
+
             print("Данные с датчиков:", sensor_id, temperature, humanity)
             TemperatureHistory.create_record(sensor_id, temperature, humanity)
             return HttpResponse("OK")

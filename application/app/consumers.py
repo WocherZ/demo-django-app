@@ -10,7 +10,6 @@ MAX_NUMBER_TEMPERATURE_POINTS = 12
 
 class SensorTempConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
-        self.period = 1
         print("WS connect")
         await self.accept()
 
@@ -23,7 +22,10 @@ class SensorTempConsumer(AsyncJsonWebsocketConsumer):
     async def send_message(self, res):
         await self.send(text_data=json.dumps(
             {"status": "OK",
-             "text_data": str(round(time.time()) % 3600)}
+             "current_temp": last_temperatures['temperatures'][-1],
+             "temperature": last_temperatures['temperatures'],
+             "timeseries": last_temperatures['timeseries']
+             }
         ))
 
 class TemperatureVisitorConsumer(AsyncJsonWebsocketConsumer):
