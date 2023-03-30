@@ -5,6 +5,8 @@ from asgiref.sync import sync_to_async
 
 from .models import *
 
+MAX_NUMBER_TEMPERATURE_POINTS = 12
+
 class TemperaturesConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
         print("WS connect")
@@ -34,18 +36,38 @@ class TemperatureVisitorConsumer(AsyncJsonWebsocketConsumer):
         await self.send_message("I recieved")
 
     async def send_message(self, res):
-        current_temp = 345
         visitor_id = self.scope["url_route"]["kwargs"]["stream"]
-        sensors = await sync_to_async(TemperatureSensor.objects.all().filter(visitor_id=visitor_id).get, thread_sensitive=True)
-        if sensors:
-            sensor = await sync_to_async(sensors.first, thread_sensitive=True)
-            history = TemperatureHistory.objects().all().filter(sensor=sensor.sensor_id)
-            if history:
-                current_temp = await sync_to_async(history.last, thread_sensitive=True)
-                print("current_temp", current_temp)
+        last_temperatures = await get_last_temperatures(visitor_id)
         await self.send(text_data=json.dumps(
             {"status": "OK",
-             "current_temp": current_temp,
-             "temperature": [1, 3, 5, 2, 4, 9]
+             "current_temp": last_temperatures[-1],
+             "temperature": last_temperatures
              }
         ))
+
+
+async def get_last_temperatures(visitor_id):
+    last_list_temp = await get_last_list_temperatures(visitor_id)
+    return last_list_temp
+
+async def get_last_list_temperatures(visitor_id):
+    last_list_temp = []
+
+    sensor = sync_to_async(TemperatureSensor.objects.all().filter(visitor_id=visitor_id).get, thread_sensitive=True)
+    sensor = await sensor()
+
+    if sensor:
+        history = sync_to_async(TemperatureHistory.get_last_n_history_records,
+                                thread_sensitive=True)
+        history = await history(sensor.sensor_id, MAX_NUMBER_TEMPERATURE_POINTS)
+        for record in history:
+            last_list_temp.append(record.temperature)
+
+        return last_list_temp
+
+    return [0.0 for i in range(MAX_NUMBER_TEMPERATURE_POINTS)]
+
+
+
+
+

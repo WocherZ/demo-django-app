@@ -1,10 +1,10 @@
-let DATA_GRAPH = [0, 0, 0, 0, 0, 0]
+let DATA_GRAPH = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-const NUMBER_POINTS = 6
+const NUMBER_POINTS = 12
 
 
 
-let default_labels = ['0', '1', '2', '3', '4', '5'];
+let default_labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
 let default_label = 'Температура';
 let ctx = document.getElementById('myChart');
 window.graphData = {
@@ -104,4 +104,4 @@ function global() {
     graphic()
 }
 
-setInterval(global, 1000)
+setInterval(global, 2000)

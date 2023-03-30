@@ -22,6 +22,9 @@ class TemperatureSensor(models.Model):
     def delete_all_objects():
         TemperatureSensor.objects.all().delete()
 
+    def get_sensor_by_visitor_id(visitor_id):
+        return TemperatureSensor.objects.all().get(visitor_id=visitor_id)
+
 
 
 class TemperatureHistory(models.Model):
@@ -41,6 +44,10 @@ class TemperatureHistory(models.Model):
 
     def delete_all_records():
         TemperatureHistory.objects.all().delete()
+
+
+    def get_last_n_history_records(sensor_id, n):
+        return reversed(TemperatureHistory.objects.all().filter(sensor=sensor_id).order_by('-id')[:n])
 
 
 class RelayCondition(models.Model):
