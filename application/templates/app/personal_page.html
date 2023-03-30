@@ -1,9 +1,7 @@
 {% extends 'base_template.html' %}
 
-{% block title %}Личный кабинет{% endblock %}
-
 {% load static %}
-
+{% block title %}Личный кабинет{% endblock %}
 {% block files %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
@@ -12,14 +10,15 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+{% if request.session.user_group == 'OPERATOR' %}
+
 <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3 mt-5">
-        <h2 class="text-center mb-4">Личный кабинет</h2>
+        <h2 class="text-center mb-4">Личный кабинет оператора</h2>
       </div>
     </div>
 </div>
-{% if request.session.user_group == 'OPERATOR' %}
 
 <div class="container">
   <div class="row">
@@ -36,6 +35,13 @@
 </div>
 
 {% elif request.session.user_group == 'VISITOR' %}
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 mt-5">
+        <h2 class="text-center mb-4">Личный кабинет пользователя</h2>
+      </div>
+    </div>
+</div>
 <div class="container-fluid" style="margin-top: 20px; margin-bottom: 20px">
     <div class="container">
         <div class="row">
@@ -124,55 +130,40 @@
 <script src="{% static 'js/temperatures.js' %}" defer></script>
 
 {% else %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>User Table</title>
-    <style>
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      th, td {
-        text-align: left;
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      a {
-        text-decoration: none;
-      }
-    </style>
-  </head>
-  <body>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Login</th>
-          <th>Name</th>
-          <th>Role</th>
-        </tr>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 mt-5">
+        <h2 class="text-center mb-4">Личный кабинет администратора</h2>
+      </div>
+    </div>
+</div>
 
-        {% for user in users %}
-        <tr>
-            <td><a href="{% url 'info_page' user.id %}">{{ user.login }} </a></td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.group }}</td>
-        </tr>
-        {% endfor %}
-      </thead>
-      <tbody id="userTableBody">
-      </tbody>
-    </table>
-    <style>
-      .tb { border-collapse: collapse; width:300px; }
-      .tb th, .tb td .tb a{ padding: 5px; border: solid 1px #777; }
-      .tb th { background-color: lightblue; }
-    </style>
-    <script>
-    </script>
+<body>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Логин</th>
+      <th>Имя</th>
+      <th>Роль</th>
+    </tr>
+
+    {% for user in users %}
+    <tr>
+        <td><a href="{% url 'info_page' user.id %}">{{ user.login }} </a></td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.group }}</td>
+    </tr>
+    {% endfor %}
+  </thead>
+  <tbody id="userTableBody">
+  </tbody>
+</table>
+<style>
+  .tb { border-collapse: collapse; width:300px; }
+  .tb th, .tb td .tb a{ padding: 5px; border: solid 1px #777; }
+  .tb th { background-color: lightblue; }
+</style>
+</body>
 
 {% endif %}
 {% endblock %}
