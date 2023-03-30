@@ -8,10 +8,10 @@ MAX_NUMBER_TEMPERATURE = 14
 
 MAX_NUMBER_RELAY = 36
 
-# Create your models here.
+
 class TemperatureSensor(models.Model):
     sensor_id = models.AutoField(primary_key=True)
-    visitor_id = models.ForeignKey(Visitor, on_delete=models.SET_NULL, null=True)
+    visitor_id = models.ForeignKey(Visitor, on_delete=models.SET_NULL, null=True, default=Visitor.objects.get(id=1))
 
     def create_sensors():
         TemperatureSensor.objects.all().delete()
@@ -69,7 +69,3 @@ class RelayCondition(models.Model):
                 relay.condition = False
             relay.save()
 
-        # for key in values_dict.keys():
-        #     relay = RelayCondition.objects.get(relay_id=int(key))
-        #     relay.condition = True
-        #     relay.save()
