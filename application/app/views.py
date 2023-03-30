@@ -68,13 +68,13 @@ class getTemperature(View):
         sensor_id = int(request.POST['sensor_id'])
         temperature = float(request.POST['temperature'])
         humanity = float(request.POST['humanity'])
-        print(humanity)
         if sensor_id < 16 and not math.isnan(temperature) and not math.isnan(humanity):
             print("Данные с датчиков:", sensor_id, temperature, humanity)
             TemperatureHistory.create_record(sensor_id, temperature, humanity)
             return HttpResponse("OK")
         else:
             return HttpResponse("404")
+
 
 # ФОРМА ОПЕРАТОРА
 class OperatorFormView(View):

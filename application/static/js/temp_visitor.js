@@ -1,4 +1,5 @@
 let DATA_GRAPH = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+let LABELS_GRAPH = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
 let period = 0;
 
 const NUMBER_POINTS = 12
@@ -25,7 +26,7 @@ let ctx = document.getElementById('myChart');
 window.graphData = {
     type: 'line',
     data: {
-        labels: default_labels,
+        labels: LABELS_GRAPH,
         datasets: [{
             label: default_label,
             data: DATA_GRAPH,
@@ -69,16 +70,14 @@ let myChart = new Chart(ctx, graphData);
 
 function graphic() {
     graphData.data.datasets[0].data = DATA_GRAPH;
+    graphData.data.lables = LABELS_GRAPH;
     myChart.update();
 }
 
 const QueryString = window.location.pathname
-console.log(QueryString)
-console.log(typeof QueryString)
 let q = QueryString.split("/")
-console.log(q)
 let id = q[q.length - 1]
-console.log(id)
+
 let connectionString = 'ws://' + window.location.host + '/ws/temp_visitor/' + id + '/'
 let socket = new WebSocket(connectionString)
 
@@ -94,17 +93,18 @@ socket.onclose = function(event) {
     console.log('WS close')
 }
 
-let timeseries = 0;
-let data = 20;
 
 socket.onmessage = function(event) {
     let server_data = JSON.parse(event.data)
     let temperature = server_data.temperature
     let current_temp = server_data.current_temp
+    let timeseries = server_data.timeseries
 
-    console.log(server_data)
+    console.log(timeseries)
     for (let i = 0; i < NUMBER_POINTS; i++) {
+
         DATA_GRAPH[i] = temperature[i]
+        LABELS_GRAPH[i] = timeseries[i]
     }
 
     document.getElementById("temp_value").textContent=current_temp

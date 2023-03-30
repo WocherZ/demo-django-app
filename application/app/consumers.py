@@ -9,8 +9,6 @@ from users.models import Visitor
 MAX_NUMBER_TEMPERATURE_POINTS = 12
 
 class SensorTempConsumer(AsyncJsonWebsocketConsumer):
-
-
     async def connect(self):
         self.period = 1
         print("WS connect")
@@ -41,21 +39,19 @@ class TemperatureVisitorConsumer(AsyncJsonWebsocketConsumer):
 
     async def send_message(self, res):
         visitor_id = self.scope["url_route"]["kwargs"]["stream"]
-        last_temperatures = await get_last_temperatures(visitor_id)
+        last_temperatures = await get_last_list_temperatures(visitor_id)
         await self.send(text_data=json.dumps(
             {"status": "OK",
-             "current_temp": last_temperatures[-1],
-             "temperature": last_temperatures
+             "current_temp": last_temperatures['temperatures'][-1],
+             "temperature": last_temperatures['temperatures'],
+             "timeseries": last_temperatures['timeseries']
              }
         ))
 
 
-async def get_last_temperatures(visitor_id):
-    last_list_temp = await get_last_list_temperatures(visitor_id)
-    return last_list_temp
-
 async def get_last_list_temperatures(visitor_id):
     last_list_temp = []
+    last_list_timeseries = []
     get_visitor_function = sync_to_async(Visitor.objects.all().get, thread_sensitive=True)
     visitor = await get_visitor_function(id=visitor_id)
 
@@ -67,9 +63,18 @@ async def get_last_list_temperatures(visitor_id):
     history = await history(sensor_id, MAX_NUMBER_TEMPERATURE_POINTS)
     for record in history:
         last_list_temp.append(record.temperature)
+        last_list_timeseries.append(str(record.time_moment.time().strftime("%H:%M:%S")))
 
     print("Данные для графика температуры", last_list_temp)
-    return last_list_temp
+    if len(last_list_temp) == 0:
+        last_list_temp = [0] * 12
+        last_list_temp = [0] * 12
+
+    result = {
+        'temperatures': last_list_temp,
+        'timeseries': last_list_timeseries
+    }
+    return result
 
 
 
