@@ -10,7 +10,7 @@ from .mqtt_sender import MqttWorker
 import time
 import math
 
-CRITICAL_RELAYS = [4]
+
 
 # Главная страница
 class HomeView(View):
@@ -73,32 +73,30 @@ def off_relay_if_limit_temp(sensor_id, current_temp, limit_value, relay_id):
             return True
     return False
 
-FLAG = True
 
+CRITICAL_RELAYS = 15
+SENSOR = 4
 # Принятие данных с датчиков из gateway
 class getTemperature(View):
-    # FLAG = False
     def post(self, request):
-        global FLAG
         sensor_id = int(request.POST['sensor_id'])
         temperature = float(request.POST['temperature'])
         humanity = float(request.POST['humanity'])
         if (sensor_id < 16) and (not math.isnan(temperature)) and (not math.isnan(humanity)):
 
-
-            if sensor_id in CRITICAL_RELAYS:
+            if sensor_id == SENSOR:
                 if temperature >= 27.0:
                     mqtt_sender = MqttWorker()
-                    mqtt_sender.send_state_2bytes(4, 0)
+                    mqtt_sender.send_state_2bytes(CRITICAL_RELAYS, 0)
                     mqtt_sender.disconnect()
-                    print("Послан сигнал на выключение реле:", 4)
-                    FLAG = True
+                    print("Послан сигнал на выключение реле:", CRITICAL_RELAYS)
+
                 else:
                     mqtt_sender = MqttWorker()
-                    mqtt_sender.send_state_2bytes(4, 1)
+                    mqtt_sender.send_state_2bytes(CRITICAL_RELAYS, 1)
                     mqtt_sender.disconnect()
-                    print("Послан сигнал на включение реле:", 4)
-                    FLAG = False
+                    print("Послан сигнал на включение реле:", CRITICAL_RELAYS)
+
 
 
             print("Данные с датчиков:", sensor_id, temperature, humanity)
@@ -132,13 +130,13 @@ class OperatorFormView(View):
         context = {}
         context['form'] = ReleForm(request.POST)
 
-        # mqtt_sender = MqttWorker()
+        mqtt_sender = MqttWorker()
         for i in range(MAX_NUMBER_RELAY):
             relay = RelayCondition.objects.get(relay_id=i)
             relay_state = 1 if relay.condition else 0
             print(relay.relay_id, relay_state)
-        #     mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
-        # mqtt_sender.disconnect()
+            mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
+        mqtt_sender.disconnect()
 
         # Сохранение картинки svg - схемы
         reles = [0]*(max(values_checkbox.keys() if values_checkbox.keys() else [0])+1)
