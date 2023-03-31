@@ -2,7 +2,9 @@ let DATA_GRAPH = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 let LABELS_GRAPH = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
 let period = 0;
 
-const NUMBER_POINTS = 12
+let NUMBER_POINTS = "30"
+
+let visitor_id = document.getElementById("visitor_id").textContent
 
 var button1 = document.getElementById('button1');
 var button2 = document.getElementById('button2');
@@ -10,14 +12,18 @@ var button3 = document.getElementById('button3');
 
 button1.onclick = function(){
     period = 1;
+    NUMBER_POINTS = "30";
+
 }
 
 button2.onclick = function(){
     period = 5;
+    NUMBER_POINTS = "150";
 }
 
 button3.onclick = function(){
     period = 10;
+    NUMBER_POINTS = "300";
 }
 
 let default_labels = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'];
@@ -74,15 +80,11 @@ function graphic() {
     myChart.update();
 }
 
-const QueryString = window.location.pathname
-let q = QueryString.split("/")
-let id = q[q.length - 1]
-
-let connectionString = 'ws://' + window.location.host + '/ws/temp_visitor/' + id + '/'
+let connectionString = 'ws://' + window.location.host + '/ws/sensor_temp/'
 let socket = new WebSocket(connectionString)
 
 function send_request(socket, text_data) {
-    socket.send(text_data)
+    socket.send(text_data+';'+visitor_id)
 }
 
 socket.onopen = function() {
@@ -100,7 +102,6 @@ socket.onmessage = function(event) {
     let current_temp = server_data.current_temp
     let timeseries = server_data.timeseries
 
-    console.log(timeseries)
     for (let i = 0; i < NUMBER_POINTS; i++) {
 
         DATA_GRAPH[i] = temperature[i]
@@ -115,7 +116,7 @@ socket.onerror = function(error) {
 }
 
 function global() {
-    send_request(socket, {'status': 'OK'})
+    send_request(socket, NUMBER_POINTS)
     graphic()
 }
 

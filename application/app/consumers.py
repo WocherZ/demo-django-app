@@ -17,9 +17,14 @@ class SensorTempConsumer(AsyncJsonWebsocketConsumer):
         print("WS disconnect " + str(code))
 
     async def receive(self, text_data):
-        await self.send_message("Bad ass")
+        text_data = text_data.split(';')
+        number_points = int(text_data[0])
+        visitor_id = int(text_data[1])
+        await self.send_message(number_points, visitor_id)
 
-    async def send_message(self, res):
+    async def send_message(self, number_points, id):
+        visitor_id = id
+        last_temperatures = await get_last_list_temperatures(visitor_id, number_points)
         await self.send(text_data=json.dumps(
             {"status": "OK",
              "current_temp": last_temperatures['temperatures'][-1],

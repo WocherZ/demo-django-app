@@ -76,8 +76,22 @@
 
                 <div class="row our_cells">
                     <div class="our_main_divs">
+                        <div style="font-size: 20px">Id пользователя:
+                            <span id="visitor_id">{{ visitor.id }}</span> </div>
+                    </div>
+                </div>
+
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 20px">Id датчика:
+                            <span id="visitor_id">{{ visitor.sensor_id.sensor_id }}</span> </div>
+                    </div>
+                </div>
+
+                <div class="row our_cells">
+                    <div class="our_main_divs">
                         <div style="font-size: 20px">Текущая температура:
-<!--                            <div id="uniqueID">{{ temperature }} <span class="highlighted_text">{{ current_rate }}</span></div>-->
+                            <span id="temp_value"></span>
                         </div>
                     </div>
                 </div>
