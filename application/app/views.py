@@ -2,14 +2,13 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import HttpResponse
 
-from .forms import ReleForm
+# from .forms import ReleForm
 from users.models import Visitor
 from .models import *
 from .schemas_draw import visualizaton
 from .mqtt_sender import MqttWorker
 import time
 import math
-
 
 
 # Главная страница
@@ -47,10 +46,12 @@ class PersonalPage(View):
         return render(request, 'app/personal_page.html', context)
 
 # Выход пользователя - сброс сессии
+
 def logout(request):
     request.session['login'] = None
     request.session['user_group'] = None
     return redirect('home')
+
 
 # Только для админов(просмотр пользователей)
 class InfoPage(View):
@@ -130,23 +131,22 @@ class OperatorFormView(View):
         context = {}
         context['form'] = ReleForm(request.POST)
 
-        mqtt_sender = MqttWorker()
+        # mqtt_sender = MqttWorker()
         for i in range(MAX_NUMBER_RELAY):
             relay = RelayCondition.objects.get(relay_id=i)
             relay_state = 1 if relay.condition else 0
             print(relay.relay_id, relay_state)
-            mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
-        mqtt_sender.disconnect()
+        #     mqtt_sender.send_state_2bytes(relay.relay_id, relay_state)
+        # mqtt_sender.disconnect()
 
         # Сохранение картинки svg - схемы
         reles = [0]*(max(values_checkbox.keys() if values_checkbox.keys() else [0])+1)
         for box in values_checkbox.keys():
             reles[box] = 1 if values_checkbox[box] == 'on' else 0
         visualizer = visualizaton()
-        if len(reles) > 30:
-            visualizer.plot_single_bloc(*reles[:30])
-        else:
-            visualizer.plot_single_bloc(*reles)
+
+        added_zeros = (36 - len(reles))*[0]
+        visualizer.plot_scheme(*reles, *added_zeros)
         time.sleep(2)
 
         return render(request, 'app/operator_form.html', context)

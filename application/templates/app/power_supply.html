@@ -1,6 +1,6 @@
 {% extends 'base_template.html' %}
 
-{% block title %}Источники питания{% endblock %}
+{% block title %}Потребители{% endblock %}
 
 {% load static %}
 
@@ -11,29 +11,35 @@
 <table class="table">
       <thead>
       <tr>
-          <th>Источник питания</th>
-          <th>Суммарная нагрузка</th>
-          <th>КПД</th>
+          <th>Потребитель</th>
+          <th>Потребляемая мощность</th>
+          <th>Сила тока</th>
+          <th>Напряжение</th>
       </tr>
       <tr>
-          <td>Блок питания №1</td>
-          <td>{{power}} А</td>
-          <td>{{KPD}}%</td>
+          <td>Потребитель №1</td>
+          <td>{{power}} кВтч</td>
+          <td>12 А</td>
+          <td>12 В</td>
       </tr>
       <tr>
-          <td>Блок питания №2</td>
-          <td>{{power}} A</td>
-          <td>{{KPD}}%</td>
+          <td>Потребитель №2</td>
+          <td>{{power}} кВтч</td>
+          <td>13 А</td>
+          <td>13 В</td>
+
       </tr>
       <tr>
-          <td>Блок питания №3</td>
-          <td>{{power}} A</td>
-          <td>{{KPD}}%</td>
+          <td>Потребитель №3</td>
+          <td>{{power}} кВтч</td>
+          <td>10 А</td>
+          <td>10 В</td>
       </tr>
       <tr>
-          <td>Блок питания №{{'4'}}</td>
-          <td>{{power}} A</td>
-          <td>{{KPD}}%</td>
+          <td>Потребитель №4</td>
+          <td>{{power}} кВтч</td>
+          <td>11 А</td>
+          <td>11 В</td>
       </tr>
 
       </thead>

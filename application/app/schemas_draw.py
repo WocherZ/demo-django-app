@@ -1,18 +1,18 @@
-import ipywidgets as widgets
-
-import schemdraw
+import ipywidgets as widgets  # pip install ipywidgets jupyter nbextension enable widgetsnbextension
+# from IPython.display import display
+# from IPython.display import HTML
+import schemdraw  # !/usr/local/bin/python3 -m pip install SchemDraw
 import schemdraw.elements as elm
 import matplotlib
 matplotlib.use('Agg')
 
-# from schemdraw import logic
 
 class visualizaton:
     def __init__(self) -> None:
         pass
 
-    def plot_single_bloc(self, r1=0, r2=0, r3=0, r4=0, r5=0, r6=0, r7=0, r8=0, r9=0, r10=0, r11=0, r12=0, r13=0, r14=0, r15=0, r16=0, r17=0, r18=0, r19=0,
-                         r20=0, r21=0, r22=0, r23=0, r24=0, r25=0, r26=0, r27=0, r28=0, r29=0, r30=0):
+    def plot_scheme(self, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20,
+                    r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, r35, r36):
         with schemdraw.Drawing(show=False) as heat:
             heat.config(unit=1)
             heat += elm.Line().down(heat.unit * 0.2)
@@ -31,231 +31,278 @@ class visualizaton:
             heat.pop()
             heat += elm.Line().right(heat.unit * 0.1)
 
-        with schemdraw.Drawing(show=False) as power:
-            power.config(unit=3)
-
-            power += elm.SourceV().right().label('12V\n10A\n№1')
-            power += elm.Line().down()
-            power.push()
-            power += elm.SourceV().left().label('12V\n10A\n№2')
-            power.pop()
-            power += elm.Line().down()
-            power.push()
-            power += elm.SourceV().left().label('12V\n10A\n№3')
-            power.pop()
-            power += elm.Line().down()
-            power.push()
-            power += elm.SourceV().left().label('12V\n10A\n№4')
-            power.pop()
-            power += elm.Line().down()
-            power += elm.Line().right()
-
-        with schemdraw.Drawing(show=False) as relay_open:
-            relay_open.config(unit=3)
-
-            relay_open += (rel1 := elm.compound.Relay(unit=2, link=True)).left().anchor('a')
-            # unit: float = 2, cycl: bool = False, switch: str = 'spst',
-            # core: bool = True, box: bool = True, boxfill: str = 'none',
-            # boxpad: float = 0.25, swreverse: bool = False, swflip: bool = False,
-            # link: bool = True)
-            relay_open.push()
-            relay_open += elm.Switch(action='open').idot().up(relay_open.unit * 0.67)
-            relay_open.pop()
-
-            relay_open += elm.Line().up().at(rel1.b)
-            relay_open += elm.MeterA().up().label(str(12) + 'A')
-            relay_open += elm.Line().up(relay_open.unit * 0.1)
-            relay_open += elm.ElementDrawing(heat).up()
-
-            relay_open += elm.Line().right(relay_open.unit).at(rel1.a).idot()
-
-        with schemdraw.Drawing(show=False) as relay_close:
-            relay_close.config(unit=3)
-
-            relay_close += (rel1 := elm.compound.Relay(unit=2, link=False)).left().anchor('a')
-            relay_close.push()
-            relay_close += elm.Switch(action='close').idot().up(relay_close.unit * 0.67)
-            relay_close.pop()
-
-            relay_close += elm.Line().up().at(rel1.b)
-            relay_close += elm.MeterA().up().label(str(12) + 'A')
-            relay_close += elm.Line().up(relay_close.unit * 0.1).label('1')
-            relay_close += elm.ElementDrawing(heat).up()
-
-            relay_close += elm.Line().right(relay_close.unit).at(rel1.a).idot()
-
-        with schemdraw.Drawing(show=False) as relay_open_down:
-            relay_open_down.config(unit=3)
-
-            relay_open_down += (rel1 := elm.compound.Relay(unit=2, link=True)).left().anchor('a')
-            # unit: float = 2, cycl: bool = False, switch: str = 'spst',
-            # core: bool = True, box: bool = True, boxfill: str = 'none',
-            # boxpad: float = 0.25, swreverse: bool = False, swflip: bool = False,
-            # link: bool = True)
-            relay_open_down.push()
-            relay_open_down += elm.Switch(action='open').idot().up(relay_open_down.unit * 0.67)
-            relay_open_down.pop()
-
-            relay_open_down += elm.Line().up().at(rel1.b)
-            relay_open_down += elm.MeterA().up().label(str(12) + 'A')
-            relay_open_down += elm.Line().up(relay_open_down.unit * 0.1)
-            relay_open_down += elm.ElementDrawing(heat).up()
-
-            relay_open_down += elm.Line().right(relay_open_down.unit).at(rel1.a).idot()
-
-        with schemdraw.Drawing(show=False) as relay_close_down:
-            relay_close_down.config(unit=3)
-
-            relay_close_down += (rel1 := elm.compound.Relay(unit=2, link=False)).left().anchor('a')
-            relay_close_down.push()
-            relay_close_down += elm.Switch(action='close').idot().up(relay_close_down.unit * 0.67)
-            relay_close.pop()
-
-            relay_close_down += elm.Line().up().at(rel1.b)
-            relay_close_down += elm.MeterA().up().label(str(12) + 'A')
-            relay_close_down += elm.Line().up(relay_close_down.unit * 0.1).label('1')
-            relay_close_down += elm.ElementDrawing(heat).up()
-
-            relay_close_down += elm.Line().right(relay_close_down.unit).at(rel1.a).idot()
-
         with schemdraw.Drawing(show=True) as d:
-
-              # Set the backend here
+            import matplotlib
+            matplotlib.use('Agg')  # Set the backend here
 
             d = schemdraw.Drawing()
-            import matplotlib
-            matplotlib.use('Agg')
             d.config(unit=3)
 
-            d += elm.ElementDrawing(power)
-
-            d += elm.Line().left()
-            d.push()
-            d += elm.Line().right()
-
-            r_up = [r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15]
-
-            for i in range(len(r_up)):
-                if r_up[i]:
-                    d += elm.ElementDrawing(relay_open).label('№' + str(i + 1))
-                else:
-                    d += elm.ElementDrawing(relay_close)
-
-            d.pop()
+            d += elm.SourceV().down().label('12V\n10A\n№1')
             d += elm.Line().down()
 
-            r_down = [r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30]
+            d += (rel1 := elm.compound.Relay(unit=2, link=r1, switch='spdt', label='1')).right().anchor('a')
+            d += (line1 := elm.Line()).down(d.unit * 4).at(rel1.b).dot()
 
-            for i in range(len(r_down)):
-                if r_down[i]:
-                    d += elm.ElementDrawing(relay_open).label('№' + str(i + 16))
-                else:
-                    d += elm.ElementDrawing(relay_close)
+            d += (JP1 := elm.Header(cols=6, rows=2, shownumber=False, pinsright=['+', '-'],
+                                    pinalignright='center').anchor('pin3'))
+            d += (line2 := elm.Line()).right().at(rel1.c)
+            d += (JP2 := elm.Header(cols=1, rows=4, shownumber=False, pinalignright='center').anchor('pin1'))
 
+            d += elm.Line().right().at(JP2.pin2)
+            d += elm.Line().up(d.unit * 0.2)
+            d += (rel2 := elm.compound.Relay(unit=2, link=r1, switch='spdt', label='2')).right().anchor('c')
+            d += elm.Line().up().at(rel2.a)
+            d += elm.SourceV().up(d.unit * 1.13).label('12V\n10A\n№1').reverse()
+
+            d += elm.Line().down(d.unit * 4).at(rel2.b).dot()
+            d += (JP3 := elm.Header(cols=6, rows=2, shownumber=False, pinsright=['+', '-'],
+                                    pinalignright='center').anchor('pin4'))
+
+            # 2
+            d += elm.Line().down(d.unit * 2.63).at(JP3.pin8)
+            d += elm.Line().left(d.unit * 0.2).at(JP3.pin1)
+            d += elm.Line().down(d.unit * 1.8)
+
+            d += (rel21 := elm.compound.Relay(unit=2, link=r12, switch='spst', label='21')).right().anchor('a')
+            d += elm.ElementDrawing(heat).down().at(rel21.b)
+            d += elm.Line().right(d.unit * 0.4)
+
+            d += elm.Line().down(d.unit * 2.63).at(JP3.pin11)
+            d += elm.Line().right(d.unit * 0.3).at(JP3.pin6)
+            d += elm.Line().down(d.unit * 1.8)
+
+            d += (rel27 := elm.compound.Relay(unit=2, link=r18, switch='spst', label='27')).right().anchor('a')
+            d += elm.ElementDrawing(heat).down().at(rel27.b)
+            d += elm.Line().left(d.unit * 0.5)
+
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+
+            d += elm.Line().left(d.unit * 0.5).at(JP2.pin3)
+            d += elm.Line().down(d.unit * 0.5)
+            d += elm.Line().right(d.unit)
+            d += elm.Line().down(d.unit * 0.1)
+            d += (rel4 := elm.compound.Relay(unit=2, link=r1, switch='spst', label='4')).right().anchor('a')
+
+            # move to rel 9-12
+            d += elm.Line().right(d.unit * 1.5).at(rel4.b)
+            d += elm.Line().down(d.unit * 0.1)
+            d += (rel9 := elm.compound.Relay(unit=2, link=r3, switch='spdt', label='9')).right().anchor('a')
+            d += elm.Line().at(rel9.b).down(d.unit * 0.1)
+            d += elm.Line().left(d.unit * 1.05)
+            d += elm.Line().to(JP3.pin3)
+
+            d += elm.Line().down(d.unit * 0.3).at(rel9.c)
+            d += (rel11 := elm.compound.Relay(unit=2, link=r3, switch='spst', label='11')).right().anchor('a')
+            d += elm.Line().at(rel11.b).down(d.unit * 0.1)
+            d += elm.Line().left(d.unit * 0.4)
+            d += elm.Line().to(JP3.pin5)
+
+            d += elm.Line().right(d.unit * 0.8).at(JP3.pin12)
+            d += elm.Line().down(d.unit * 3)
+            d += elm.Line().left(d.unit * 5)
+            d += elm.Line().up(d.unit * 10)
+            d += elm.Line().right(d.unit * 3.69)
+
+            d.push()  # loop to 3
+
+            d += elm.Line().right(d.unit).at(JP2.pin4)
+            d += elm.Line().down(d.unit * 1.4)
+            d += elm.Line().left(d.unit)
+            d += elm.Line().down(d.unit * 0.1)
+            d += (rel3 := elm.compound.Relay(unit=2, link=r1, switch='spst', label='3')).right().anchor('a')
+            d += elm.Line().at(rel3.b).down(d.unit * 0.1)
+            d += elm.Line().left(d.unit * 0.53)
+            d += elm.Line().to(JP1.pin4)
+
+            # 1
+            d += elm.Line().down(d.unit * 1.43).at(JP1.pin8)
+            d += elm.Line().left(d.unit * 0.2).at(JP1.pin1)
+            d += elm.Line().down(d.unit * 0.6)
+
+            d += (rel13 := elm.compound.Relay(unit=2, link=r4, switch='spst', label='13')).right().anchor('a')
+            d += elm.ElementDrawing(heat).down().at(rel13.b)
+            d += elm.Line().right(d.unit * 0.4)
+
+            d += elm.Line().down(d.unit * 1.43).at(JP1.pin11)
+            d += elm.Line().right(d.unit * 0.3).at(JP1.pin6)
+            d += elm.Line().down(d.unit * 0.6)
+
+            d += (rel20 := elm.compound.Relay(unit=2, link=r11, switch='spst', label='20')).right().anchor('a')
+            d += elm.ElementDrawing(heat).down().at(rel20.b)
+            d += elm.Line().left(d.unit * 0.5)
+
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+
+            d += elm.Line().left(d.unit * 1).at(JP1.pin7)
+            d += elm.Line().up(d.unit * 6.88)
+            d += elm.Line().right(d.unit * 1.27)
+
+            d.pop()
+            # к 3
+            d += elm.Line().right(d.unit * 2.7).color('white')
+            d += elm.Line().down(d.unit * 0.1)
+            d += elm.SourceV().down().label('12V\n10A\n№3')
+            d += elm.Line().down()
+
+            d += (rel5 := elm.compound.Relay(unit=2, link=r2, switch='spdt', label='5')).right().anchor('a')
+            d += (line1 := elm.Line()).down(d.unit * 4).at(rel5.b).dot()
+
+            d += (JP4 := elm.Header(cols=6, rows=2, shownumber=False, pinsright=['+', '-'],
+                                    pinalignright='center').anchor('pin3'))
+            d += (line2 := elm.Line()).right().at(rel5.c)
+            d += (JP5 := elm.Header(cols=1, rows=4, shownumber=False, pinalignright='center').anchor('pin1'))
+
+            d += elm.Line().right().at(JP5.pin2)
+            d += elm.Line().up(d.unit * 0.2)
+            d += (rel6 := elm.compound.Relay(unit=2, link=r2, switch='spdt', label='6')).right().anchor('c')
+            d += elm.Line().up().at(rel6.a)
+            d += elm.SourceV().up(d.unit * 1.13).label('12V\n10A\n№4').reverse()
+
+            d += elm.Line().down(d.unit * 4).at(rel6.b).dot()
+            d += (JP6 := elm.Header(cols=6, rows=2, shownumber=False, pinsright=['+', '-'],
+                                    pinalignright='center').anchor('pin4'))
+
+            # 4
+            d += elm.Line().down(d.unit * 2.63).at(JP6.pin8)
+            d += elm.Line().left(d.unit * 0.2).at(JP6.pin1)
+            d += elm.Line().down(d.unit * 1.8)
+
+            d += (rel36 := elm.compound.Relay(unit=2, link=r27, switch='spst', label='36')).right().anchor('a')
+            d += elm.ElementDrawing(heat).down().at(rel36.b)
+            d += elm.Line().right(d.unit * 0.4)
+
+            d += elm.Line().down(d.unit * 2.63).at(JP6.pin11)
+            d += elm.Line().right(d.unit * 0.3).at(JP6.pin6)
+            d += elm.Line().down(d.unit * 1.8)
+
+            d += (rel42 := elm.compound.Relay(unit=2, link=r33, switch='spst', label='42')).right().anchor('a')
+            d += elm.ElementDrawing(heat).down().at(rel42.b)
+            d += elm.Line().left(d.unit * 0.5)
+
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+
+            d += elm.Line().left(d.unit * 0.5).at(JP5.pin3)
+            d += elm.Line().down(d.unit * 0.5)
+            d += elm.Line().right(d.unit)
+            d += elm.Line().down(d.unit * 0.1)
+            d += (rel8 := elm.compound.Relay(unit=2, link=r2, switch='spst', label='8')).right().anchor('a')
+            d += elm.Line().at(rel8.b).down(d.unit * 0.1)
+            d += elm.Line().right(d.unit * 0.35)
+            d += elm.Line().to(JP6.pin2)
+
+            d += elm.Line().right(d.unit * 0.8).at(JP3.pin12)
+            d += elm.Line().down(d.unit * 3)
+            d += elm.Line().left(d.unit * 5)
+            d += elm.Line().up(d.unit * 10)
+            d += elm.Line().right(d.unit * 3.69)
+
+            d.push()  # loop to 3
+
+            d += elm.Line().right(d.unit).at(JP5.pin4)
+            d += elm.Line().down(d.unit * 1.4)
+            d += elm.Line().left(d.unit)
+            d += elm.Line().down(d.unit * 0.1)
+            d += (rel7 := elm.compound.Relay(unit=2, link=r2, switch='spst', label='7')).right().anchor('a')
+            d += elm.Line().at(rel7.b).down(d.unit * 0.1)
+            d += elm.Line().left(d.unit * 0.9)
+            d += elm.Line().up(d.unit * 1.17)
+            d += elm.Line().left(d.unit * 0.8)
+            d += elm.Line().down(d.unit * 0.1)
+            d += (rel10 := elm.compound.Relay(unit=2, link=r3, switch='spdt', label='10')).right().anchor('a')
+            d += elm.Line().right(d.unit * 0.6).at(rel10.b)
+            d += elm.Line().to(JP4.pin2)
+
+            d += elm.Line().down(d.unit * 0.3).at(rel10.c)
+            d += (rel12 := elm.compound.Relay(unit=2, link=r3, switch='spst', label='12')).right().anchor('a')
+            d += elm.Line().at(rel12.b).down(d.unit * 0.1)
+            d += elm.Line().right(d.unit * 1.3)
+            d += elm.Line().down(d.unit * 0.1).to(JP4.pin4)
+
+            # .to(JP4.pin4)
+
+            # 3
+            d += elm.Line().down(d.unit * 1.43).at(JP4.pin8)
+            d += elm.Line().left(d.unit * 0.2).at(JP4.pin1)
+            d += elm.Line().down(d.unit * 0.6)
+
+            d += (rel28 := elm.compound.Relay(unit=2, link=r19, switch='spst', label='28')).right().anchor('a')
+            d += elm.ElementDrawing(heat).down().at(rel28.b)
+            d += elm.Line().right(d.unit * 0.4)
+
+            d += elm.Line().down(d.unit * 1.43).at(JP4.pin11)
+            d += elm.Line().right(d.unit * 0.3).at(JP4.pin6)
+            d += elm.Line().down(d.unit * 0.6)
+
+            d += (rel35 := elm.compound.Relay(unit=2, link=r26, switch='spst', label='35')).right().anchor('a')
+            d += elm.ElementDrawing(heat).down().at(rel35.b)
+            d += elm.Line().left(d.unit * 0.5)
+
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+            d += elm.Line().left(d.unit * 0.05).color('white')
+            d += elm.Line().left(d.unit * 0.05).color('black')
+
+            d += elm.Line().right(d.unit * 1).at(JP6.pin12)
+            d += elm.Line().up(d.unit * 7)
+            d += elm.Line().left(d.unit * 1.53)
+
+            d += elm.Line().left(d.unit * 0.8).at(JP4.pin7)
+            d += elm.Line().down(d.unit * 3)
+            d += elm.Line().right(d.unit * 5)
+            d += elm.Line().up(d.unit * 10.1)
+            d += elm.Line().left(d.unit * 3.933)
+            d += elm.Line().down(d.unit * 0.2)
+
+            # d.draw()
             d.save('static/img/scheme.svg')
-            print('Successfully saved image')
-
-    def interact_plot(self):
-        r1 = widgets.Checkbox(
-            value=True, description='Реле 1', disabled=False, indent=False)
-        r2 = widgets.Checkbox(
-            value=True, description='Реле 2', disabled=False, indent=False)
-        r3 = widgets.Checkbox(
-            value=True, description='Реле 3', disabled=False, indent=False)
-        r4 = widgets.Checkbox(
-            value=True, description='Реле 4', disabled=False, indent=False)
-        r5 = widgets.Checkbox(
-            value=True, description='Реле 5', disabled=False, indent=False)
-        r6 = widgets.Checkbox(
-            value=True, description='Реле 6', disabled=False, indent=False)
-        r7 = widgets.Checkbox(
-            value=True, description='Реле 7', disabled=False, indent=False)
-        r8 = widgets.Checkbox(
-            value=True, description='Реле 8', disabled=False, indent=False)
-        r9 = widgets.Checkbox(
-            value=True, description='Реле 9', disabled=False, indent=False)
-        r10 = widgets.Checkbox(
-            value=True, description='Реле 10', disabled=False, indent=False)
-        r11 = widgets.Checkbox(
-            value=True, description='Реле 11', disabled=False, indent=False)
-        r12 = widgets.Checkbox(
-            value=True, description='Реле 12', disabled=False, indent=False)
-        r13 = widgets.Checkbox(
-            value=True, description='Реле 13', disabled=False, indent=False)
-        r14 = widgets.Checkbox(
-            value=True, description='Реле 14', disabled=False, indent=False)
-        r15 = widgets.Checkbox(
-            value=True, description='Реле 15', disabled=False, indent=False)
-        r16 = widgets.Checkbox(
-            value=True, description='Реле 16', disabled=False, indent=False)
-        r17 = widgets.Checkbox(
-            value=True, description='Реле 17', disabled=False, indent=False)
-        r18 = widgets.Checkbox(
-            value=True, description='Реле 18', disabled=False, indent=False)
-        r19 = widgets.Checkbox(
-            value=True, description='Реле 19', disabled=False, indent=False)
-        r20 = widgets.Checkbox(
-            value=True, description='Реле 20', disabled=False, indent=False)
-        r21 = widgets.Checkbox(
-            value=True, description='Реле 21', disabled=False, indent=False)
-        r22 = widgets.Checkbox(
-            value=True, description='Реле 22', disabled=False, indent=False)
-        r23 = widgets.Checkbox(
-            value=True, description='Реле 23', disabled=False, indent=False)
-        r24 = widgets.Checkbox(
-            value=True, description='Реле 24', disabled=False, indent=False)
-        r25 = widgets.Checkbox(
-            value=True, description='Реле 25', disabled=False, indent=False)
-        r26 = widgets.Checkbox(
-            value=True, description='Реле 26', disabled=False, indent=False)
-        r27 = widgets.Checkbox(
-            value=True, description='Реле 27', disabled=False, indent=False)
-        r28 = widgets.Checkbox(
-            value=True, description='Реле 28', disabled=False, indent=False)
-        r29 = widgets.Checkbox(
-            value=True, description='Реле 29', disabled=False, indent=False)
-        r30 = widgets.Checkbox(
-            value=True, description='Реле 30', disabled=False, indent=False)
-
-        out = widgets.interactive_output(self.plot_single_bloc, {
-            'r1': r1,
-            'r2': r2,
-            'r3': r3,
-            'r4': r4,
-            'r5': r5,
-            'r6': r6,
-            'r7': r7,
-            'r8': r8,
-            'r9': r9,
-            'r10': r10,
-            'r11': r11,
-            'r12': r12,
-            'r13': r13,
-            'r14': r14,
-            'r15': r15,
-            'r16': r16,
-            'r17': r17,
-            'r18': r18,
-            'r19': r19,
-            'r20': r20,
-            'r21': r21,
-            'r22': r22,
-            'r23': r23,
-            'r24': r24,
-            'r25': r25,
-            'r26': r26,
-            'r27': r27,
-            'r28': r28,
-            'r29': r29,
-            'r30': r30})
-
-        checkboxes_1 = widgets.HBox([r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15])
-        checkboxes_2 = widgets.HBox([r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30])
-        # box = widgets.HBox([out, r8])
-
-        # display(checkboxes_1, checkboxes_2)
+            print('Image saved successfully')
 
 
 # view = visualizaton()
-# view.plot_single_bloc()
-# view.interact_plot()
+
+# ar - массив значений реле
+# Андрей! Три строки ниже удадляешь и передаешь массив с реле сразу в функцию
+# ar = []
+# for _ in range(36):
+#     ar.append(True)
+#
+# view.plot_scheme(*ar)
+# SVG('city.svg')
