@@ -10,34 +10,11 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-{% if request.session.user_group == 'OPERATOR' %}
-
+{% if request.session.user_group == 'VISITOR' %}
 <div class="container">
     <div class="row">
       <div class="col-md-6 offset-md-3 mt-5">
-        <h2 class="text-center mb-4">Личный кабинет оператора</h2>
-      </div>
-    </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <a href="{% url 'operator_form' %}" class="btn btn-primary">Форма оператора </a>
-    </div>
-    <div class="col">
-      <a href="{% url 'consumer_source' %}" class="btn btn-primary">Источники потребителей</a>
-    </div>
-    <div class="col">
-      <a href="{% url 'power_supply' %}" class="btn btn-primary">Блоки питания</a>
-    </div>
-  </div>
-</div>
-{% elif request.session.user_group == 'VISITOR' %}
-<div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3 mt-5">
-        <h2 class="text-center mb-4">Личный кабинет пользователя</h2>
+        <h2 class="text-center mb-4">Личный кабинет пользователя 1 этажа</h2>
       </div>
     </div>
 </div>
@@ -137,6 +114,113 @@
     </div>
 </div>
 <script src="{% static 'js/sensor_temp.js' %}" defer></script>
+
+
+{% elif request.session.user_group == 'VISITOR_2FLOOR' %}
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 mt-5">
+        <h2 class="text-center mb-4">Личный кабинет пользователя 2 этажа</h2>
+      </div>
+    </div>
+</div>
+<div class="container-fluid" style="margin-top: 20px; margin-bottom: 20px">
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <canvas id='myChart' width="400" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="row our_cells">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-2">
+                                <a class="btn btn-primary" id="button1">1 минута </a>
+                            </div>
+                            <div class="col-2">
+                                <a class="btn btn-primary" id="button2">5 минут</a>
+                            </div>
+                            <div class="col-2">
+                                <a class="btn btn-primary" id="button3">10 минут</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <p></p>
+                </div>
+                <div class="row">
+                    <div class="row justify-content-end">
+                        <div class="col-2">
+                            <button id="button" class="btn btn-secondary">Generate PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 20px">Имя пользователя: {{ visitor.name }} </div>
+                    </div>
+                </div>
+
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 20px">Номер квартиры:
+                            <span id="visitor_id">{{ visitor.id }}</span> </div>
+                    </div>
+                </div>
+
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 20px">Id датчика:
+                            <span id="visitor_id">{{ visitor.sensor_id.sensor_id }}</span> </div>
+                    </div>
+                </div>
+
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 20px">Текущая температура:
+                            <span id="temp_value"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 20px">Базовый тариф: {{ visitor.tariff }} руб/кВтч
+                        </div>
+                    </div>
+                </div>
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 20px">Стоимость энергии: {{ current_price }} руб.
+                        </div>
+                    </div>
+                </div>
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 20px">Статус по стоимости:
+                            {{ visitor.status }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <div style="font-size: 20px">Ваш баланс:
+                            <div><span class="highlighted_text">{{ visitor.balance }}</span> руб</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/sensor_temp.js' %}" defer></script>
+
 
 {% else %}
 <div class="container">

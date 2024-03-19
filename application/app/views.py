@@ -36,6 +36,12 @@ class PersonalPage(View):
             context['visitor'] = visitor
             context['current_price'] = visitor.tariff * visitor.consumed_energy
 
+        if request.session['user_group'] == 'VISITOR_2FLOOR':
+            login = request.session['login']
+            visitor = Visitor.objects.all().get(login=login)
+            context['visitor'] = visitor
+            context['current_price'] = visitor.tariff * visitor.consumed_energy
+
         # для ADMIN
         if request.session['user_group'] == 'ADMIN':
             context['users'] = Visitor.objects.all()
