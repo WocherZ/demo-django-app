@@ -6,7 +6,6 @@ from django.http import HttpResponse
 from users.models import Visitor
 from .models import *
 from .schemas_draw import visualizaton
-from .mqtt_sender import MqttWorker
 import time
 import math
 
@@ -36,26 +35,40 @@ class PersonalPage(View):
             context['visitor'] = visitor
             context['current_price'] = visitor.tariff * visitor.consumed_energy
 
+            sensor_id = visitor.sensor_id.sensor_id
+            print(sensor_id)
+            temp = TemperatureHistory.objects.all().filter(sensor=sensor_id)[0].temperature
+            hum = TemperatureHistory.objects.all().filter(sensor=sensor_id).order_by('-id')[0].humanity
+            # TODO change filter
+            context['curr_temperature'] = temp
+            context['curr_humidity'] = hum
+
+            context['temp_history'] = [obj.temperature for obj in TemperatureHistory.objects.filter(sensor=sensor_id)]
+            context['hum_history'] = [obj.humanity for obj in TemperatureHistory.objects.filter(sensor=sensor_id)]
+
         if request.session['user_group'] == 'VISITOR_2FLOOR':
             login = request.session['login']
             visitor = Visitor.objects.all().get(login=login)
             context['visitor'] = visitor
             context['current_price'] = visitor.tariff * visitor.consumed_energy
 
+            sensor_id = visitor.sensor_id.sensor_id
+            temp = TemperatureHistory.objects.all().filter(sensor=sensor_id)[0].temperature
+            hum = TemperatureHistory.objects.all().filter(sensor=sensor_id)[0].humanity
+            context['curr_temperature'] = temp
+            context['curr_humidity'] = hum
+
         # для ADMIN
         if request.session['user_group'] == 'ADMIN':
             context['users'] = Visitor.objects.all()
 
-        if request.session['user_group'] == 'OPERATOR':
-            pass
-
         return render(request, 'app/personal_page.html', context)
 
 # Выход пользователя - сброс сессии
-def logout(request):
-    request.session['login'] = None
-    request.session['user_group'] = None
-    return redirect('home')
+# def logout(request):
+#     request.session['login'] = None
+#     request.session['user_group'] = None
+#     return redirect('home')
 
 
 # Только для админов(просмотр пользователей)

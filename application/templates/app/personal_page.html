@@ -42,6 +42,30 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <p></p>
+                </div>
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <canvas id='myChart2' width="400" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="row our_cells">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-2">
+                                <a class="btn btn-primary" id="button1">1 минута </a>
+                            </div>
+                            <div class="col-2">
+                                <a class="btn btn-primary" id="button2">5 минут</a>
+                            </div>
+                            <div class="col-2">
+                                <a class="btn btn-primary" id="button3">10 минут</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <p></p>
                 </div>
@@ -78,7 +102,7 @@
                 <div class="row our_cells">
                     <div class="our_main_divs">
                         <div style="font-size: 20px">Текущая температура:
-                            <span id="temp_value"></span>
+                            <span id="temp_value">{{ curr_temperature }}</span>
                         </div>
                     </div>
                 </div>
@@ -151,6 +175,29 @@
                 <div class="row">
                     <p></p>
                 </div>
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <canvas id='myChart2' width="400" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="row our_cells">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-2">
+                                <a class="btn btn-primary" id="button1">1 минута </a>
+                            </div>
+                            <div class="col-2">
+                                <a class="btn btn-primary" id="button2">5 минут</a>
+                            </div>
+                            <div class="col-2">
+                                <a class="btn btn-primary" id="button3">10 минут</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p></p>
+                </div>
                 <div class="row">
                     <div class="row justify-content-end">
                         <div class="col-2">
@@ -161,6 +208,14 @@
             </div>
 
             <div class="col-4">
+                <div class="row our_cells">
+                    <div class="our_main_divs">
+                        <label for="temperature_input" style="font-size: 20px">Установить температуру:</label>
+                        <input type="number" id="temperature_input" name="temperature_input" min="0" max="40">
+                        <button id="set_temperature_btn" class="btn btn-primary">Установить</button>
+                    </div>
+                </div>
+                <p></p>
                 <div class="row our_cells">
                     <div class="our_main_divs">
                         <div style="font-size: 20px">Имя пользователя: {{ visitor.name }} </div>
@@ -184,7 +239,7 @@
                 <div class="row our_cells">
                     <div class="our_main_divs">
                         <div style="font-size: 20px">Текущая температура:
-                            <span id="temp_value"></span>
+                            <span id="temp_value">{{ curr_temperature }}</span>
                         </div>
                     </div>
                 </div>
@@ -197,7 +252,7 @@
                 </div>
                 <div class="row our_cells">
                     <div class="our_main_divs">
-                        <div style="font-size: 20px">Стоимость энергии: {{ current_price }} руб.
+                        <div style="font-size: 20px">Стоимость отопления: {{ current_price }} руб.
                         </div>
                     </div>
                 </div>
