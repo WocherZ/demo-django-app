@@ -46,7 +46,6 @@ class PersonalPage(View):
         return render(request, 'app/personal_page.html', context)
 
 # Выход пользователя - сброс сессии
-
 def logout(request):
     request.session['login'] = None
     request.session['user_group'] = None
